@@ -1,5 +1,5 @@
 # Greenworks Dashboard
-This is a proof-of-concept dashboard for the Office of Sustainability's Greenworks initiative.
+This is a proof-of-concept dashboard for the Office of Sustainability's Greenworks initiative. -t
 
 ![demo](https://cloud.githubusercontent.com/assets/2152151/19974332/8080e8a0-a1be-11e6-92f2-103487302b5a.gif)
 
