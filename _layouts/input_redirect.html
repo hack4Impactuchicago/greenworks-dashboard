@@ -1,7 +1,187 @@
 <!DOCTYPE html>
 <html>
-<head>
-var x = document.createElement("INPUT");
-x.setAttribute("type", "file");
-</head>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Data Upload | phila.gov</title>
+    <link rel="stylesheet" type="text/css" href="../css/input.css">
+
+    <link rel='icon' type='image/x-icon' href="//cityofphiladelphia.github.io/patterns/images/favicon.ico">
+    <meta name="description" content="">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+    <!--hi-->
+    <!--pattern stylesheet includes foundation css -->
+    <link rel="stylesheet" href="//cityofphiladelphia.github.io/patterns/dist/1.4.1/css/patterns.css">
+
+    <link rel="canonical" href="">
+    <style>
+          span.csv {
+            background: none repeat scroll 0 0 white;
+            border: 1px solid blue;
+            color: black;
+            font-size: 12px;
+            height: 30px;
+            letter-spacing: 1px;
+            line-height: 30px;
+            margin: 0 auto;
+            position: static;
+            text-align: center;
+            word-wrap: normal;
+            top: -80px;
+            left:-30px;
+            display:none;
+            padding:0 20px;
+
+      }
+            span.csv:after{
+                content:'';
+                position:absolute;
+                bottom:-10px;
+                width:10px;
+                height:10px;
+                border-bottom:5px solid #dfdfdf;
+                border-right:5px solid #dfdfdf;
+                background:#f8f8f8;
+                left:50%;
+                margin-left:-5px;
+                -moz-transform:rotate(45deg);
+                -webkit-transform:rotate(45deg);
+                transform:rotate(45deg);
+            }
+            p{
+                margin:100px;
+                float:right;
+                position:static;
+                cursor:pointer;
+            }
+
+            p:hover span{
+                display:block;
+    }
+        </style>
+  </head>
+
+  <body>
+  <div class="full" id="application">
+    <!-- Begin header -->
+<header data-swiftype-index='false' class="site-header app">
+  <div class="row">
+    <div class="small-24 columns">
+      <a href="http://alpha.phila.gov/" class="logo">
+        <img data-interchange="[//cityofphiladelphia.github.io/patterns/images/city-of-philadelphia-mobile.png, small], [//cityofphiladelphia.github.io/patterns/images/city-of-philadelphia-white.png, medium]" src="//cityofphiladelphia.github.io/patterns/images/city-of-philadelphia-white.png" alt="City of Philadelphia">
+      </a>
+      <div class="page-title-container">
+        <a href="https://cityofphiladelphia.github.io/greenworks-dashboard/">
+          <h1 class="page-title">Greenworks Dashboard</h1>
+        </a>
+          <h2 class="page-subtitle">Upload CSV Data</h2>
+      </div>
+    </div>
+  </div>
+  <div class="row expanded">
+    <div class="small-24 small-centered columns">
+        <div class="row expanded">
+            <div class="columns">
+                <div class="row">
+                    <div class="large-24 columns">
+                        <nav>
+                            <ul class="breadcrumbs">
+                                <li><a href="https://beta.phila.gov">phila.gov</a></li>
+                                <li><a href="https://beta.phila.gov/departments/office-of-sustainability/">Office of Sustainability</a></li>
+                                <li>Greenworks Dashboard</li>
+                                <li>Upload CSV Data</li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</header>
+
+      <article data-swiftype-name="body" data-swiftype-type="text">
+        <div class="row">
+          <div class="large-24 columns">
+                <div class="form-container">
+                    <form action="/action_page.php">
+                        <label for="fname">CSV File Upload <p> ? <span class="csv"> Upload your data here in a .csv file! </span> </p> </label>
+                        <input type="file" id="fname" name="firstname">
+                        <label for="graph-type">Graph Type </label>
+                        <div class="graphtypes">
+                            <input type="radio" id="graph-type" name="graphtype" value="line">Line Graph<br />
+                            <input type="radio" id="graph-type" name="graphtype" value="bar">Bar Graph<br />
+                        </div>
+                        <label for="description">Description <p> ? <span class= "csv"> Type the description of your data and graph here! This will be wh
+                              what will be displayed on the dashboard next to your graph. </span> </p></label>
+                        <textarea id="description" name="subject" style="height:200px"></textarea>
+                    </form>
+              </div>
+
+              <div class="submission-form-container">
+                  <form action="/action_page.php">
+                      <input type="submit" value="Submit">
+                  </form>
+              </div>
+
+          </div>
+        </div>
+      </article>
+    </div><!-- End #page -->
+    <!-- Begin Footer -->
+<footer data-swiftype-index='false' class="site-footer">
+  <section class="fat">
+    <div class="row">
+      <div class="large-8 columns">
+        <h1>Government</h1>
+        <nav>
+          <ul>
+            <li><a href="http://alpha.phila.gov">alpha.phila.gov</a></li>
+            <li><a href="http://alpha.phila.gov/departments">City Government Directory</a></li>
+            <li><a href="http://www.phila.gov/mayor">Mayor's Office</a></li>
+            <li><a href="http://iframe.publicstuff.com/#?client_id=242">Report an Issue / 311</a></li>
+            <li><a href="http://cityofphiladelphia.wordpress.com/">News</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="large-16 columns">
+        <h1>Browse alpha.phila.gov</h1>
+        <nav>
+          <ul class="columns-2">
+            <li><a href="http://alpha.phila.gov/browse/health">Health</a></li>
+            <li><a href="http://alpha.phila.gov/browse/legal">Legal</a></li>
+            <li><a href="http://alpha.phila.gov/browse/payments-and-taxes">Payments and Taxes</a></li>
+            <li><a href="http://alpha.phila.gov/browse/permits-licenses">Permits and Licenses</a></li>
+            <li><a href="http://alpha.phila.gov/browse/property-housing">Property and Housing</a></li>
+            <li><a href="http://alpha.phila.gov/browse/public-safety">Public Safety</a></li>
+            <li><a href="http://alpha.phila.gov/browse/streets-and-utilities">Streets and Utilities</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </section>
+  <div class="row classic center">
+    <div class="columns">
+      <nav>
+        <ul class="inline-list">
+          <li><a href="http://alpha.phila.gov/terms-of-use">Terms of use</a></li>
+          <li><a href="http://www.phila.gov/privacy/pdfs/FinalCityOpenRecords.pdf">Right to know (pdf)</a></li>
+          <li><a href="http://alpha.phila.gov/privacypolicy">Privacy Policy</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<!-- End Footer -->
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/foundation/6.1.2/foundation.min.js"></script>
+
+    <script src="//cityofphiladelphia.github.io/patterns/dist/1.4.1/js/patterns.min.js"></script>
+  </body>
 </html>

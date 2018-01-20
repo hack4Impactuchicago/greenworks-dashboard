@@ -2,6 +2,7 @@
 .chartist-tooltip:before{
   border-top-color: #444444;
 }
+
 .chartist-tooltip {
   background: #444444;
   color: white;
