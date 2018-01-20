@@ -6,19 +6,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Data Upload | phila.gov</title>
-      
+
     <link rel="stylesheet" type="text/css" href="../css/input.css">
-      
+
     <link rel='icon' type='image/x-icon' href="//cityofphiladelphia.github.io/patterns/images/favicon.ico">
     <meta name="description" content="">
-
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
     <!--pattern stylesheet includes foundation css -->
     <link rel="stylesheet" href="//cityofphiladelphia.github.io/patterns/dist/1.4.1/css/patterns.css">
 
     <link rel="canonical" href="">
+    <style>
+          span.csv {
+            background: none repeat scroll 0 0 #F8F8F8;
+            border: 5px solid #DFDFDF;
+            color: #717171;
+            font-size: 13px;
+            height: 30px;
+            letter-spacing: 1px;
+            line-height: 30px;
+            margin: 0 auto;
+            position: relative;
+            text-align: center;
+            text-transform: uppercase;
+            top: -80px;
+            left:-30px;
+            display:none;
+            padding:0 20px;
 
+      }
+            span.csv:after{
+                content:'';
+                position:absolute;
+                bottom:-10px;
+                width:10px;
+                height:10px;
+                border-bottom:5px solid #dfdfdf;
+                border-right:5px solid #dfdfdf;
+                background:#f8f8f8;
+                left:50%;
+                margin-left:-5px;
+                -moz-transform:rotate(45deg);
+                -webkit-transform:rotate(45deg);
+                transform:rotate(45deg);
+            }
+            p{
+                margin:100px;
+                float:left;
+                position:relative;
+                cursor:pointer;
+            }
+
+            p:hover span{
+                display:block;
+    }
+        </style>
   </head>
 
   <body>
@@ -40,7 +83,7 @@
   </div>
   <div class="row expanded">
     <div class="small-24 small-centered columns">
-        <div class="row expanded">       
+        <div class="row expanded">
             <div class="columns">
                 <div class="row">
                     <div class="large-24 columns">
@@ -59,29 +102,31 @@
     </div>
   </div>
 </header>
+
       <article data-swiftype-name="body" data-swiftype-type="text">
         <div class="row">
           <div class="large-24 columns">
                 <div class="form-container">
                     <form action="/action_page.php">
-                        <label for="fname">CSV File Upload</label>
+                        <label for="fname">CSV File Upload <p> ? <span class="csv"> Upload your data here in a .csv file! </span> </p> </label>
                         <input type="file" id="fname" name="firstname">
-                        <label for="graph-type">Graph Type</label>
+                        <label for="graph-type">Graph Type </label>
                         <div class="graphtypes">
                             <input type="radio" id="graph-type" name="graphtype" value="line">Line Graph<br />
                             <input type="radio" id="graph-type" name="graphtype" value="bar">Bar Graph<br />
                         </div>
-                        <label for="description">Descriptive Text</label>
+                        <label for="description">Description <p> ? <span class= "csv"> Type the description of your data and graph here! This will be wh
+                              what will be displayed on the dashboard next to your graph. </span> </p></label>
                         <textarea id="description" name="subject" style="height:200px"></textarea>
                     </form>
               </div>
-    
+
               <div class="submission-form-container">
                   <form action="/action_page.php">
                       <input type="submit" value="Submit">
                   </form>
               </div>
-              
+
           </div>
         </div>
       </article>
@@ -140,4 +185,3 @@
     <script src="//cityofphiladelphia.github.io/patterns/dist/1.4.1/js/patterns.min.js"></script>
   </body>
 </html>
-
