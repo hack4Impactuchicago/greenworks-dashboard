@@ -6,9 +6,10 @@ app = Flask(__name__)
 
 @app.route('/')
 def view():
-  fileName = 'planted_trees.csv'
+  fileName = '_low_carbon_commute.csv'
   data = reader.csvToDict(fileName)
   return dictToHtml(data)
+ # print("hello")
 
 # FLASK_APP=htmlGenerator.py flask run
 
