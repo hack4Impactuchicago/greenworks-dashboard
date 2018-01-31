@@ -36,25 +36,119 @@ Chart.defaults.global.tooltips.callbacks.label = function (tooltipItem, data) {
 
 <div class= "row">
   <div class="medium-16 column">
-
     {% capture about_content %}{% include about.md %}{% endcapture %}
-
     {{ about_content | markdownify }}
-
 	</div>
 	<div class="medium-8 column">
-	  <aside id="secondary" class="related pll-mu">
-	    <!-- <h2>About the Application</h2> -->
-
+	  <aside id="secondary" class="related pll-mu">	    
+        <!-- <h2>About the Application</h2> -->
 	    <p>This is an open source project that uses the City of Philadelphia <a href="https://github.com/CityOfPhiladelphia/patterns">patterns</a>, <a href="http://jekyllrb.com/">Jekyll</a>, and <a href="http://www.chartjs.org/">Chart.js</a>. </p>
 	    <a href="http://beta.phila.gov/feedback" class="button icon">Leave Feedback<i class="fa fa-comment"></i></a>
 	    <br>
 	    <a href="https://github.com/CityOfPhiladelphia/greenworks-dashboard" class="button icon">Source Code<i class="fa fa-code"></i></a>
 	    <br>
 	    <a href="https://www.opendataphilly.org/dataset/greenworks-dashboard" class="button icon">Download Data<i class="fa fa-table"></i></a>
+        <br>
+        <button id="popupbutton" class="button icon">
+            Upload Data
+            <i class="fa fa-cloud-upload"></i>
+        </button>
 	  </aside>
 	</div>
 </div>
+
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <div class="form-container">
+        <h2>Greenworks Dashboard: Upload Data</h2>
+          <form action="/parse.py">
+              <label for="fileUpload">CSV File Upload</label>
+              <div class="graphtypes">
+                  <input type="file" id="fname" name="firstname" onchange="validate_fileupload(this.value);">
+                  <p class="incorrect-file-upload">*NOTE: Incorrect File Upload</p>
+              </div>
+              <label for="graph-type">Graph Type </label>
+              <div class="graphtypes">
+                  <input type="radio" id="graph-type" name="graphtype" value="line">Line Graph<br />
+                  <input type="radio" id="graph-type" name="graphtype" value="bar">Bar Graph<br />
+              </div>
+              <label for="description">Description</label>
+              <div class="graphtypes">
+                  <textarea id="description" name="subject" style="height:200px"></textarea>
+              </div>
+              <div class="circle-color-input graphtypes">
+                <input type='radio' name='opt' id='seaside' class='menuopt seaside'>
+                <input type='radio' name='opt' id='coffee' class='menuopt coffee'>
+                <input type='radio' name='opt' id='crayons' class='menuopt crayons'>
+                <input type='radio' name='opt' id='nature' class='menuopt nature'>
+                <input type='radio' name='opt' id='cavern' class='menuopt cavern'>
+              <nav class="color-wheel">
+                <ul class='circle'>
+                    <li class='seasideSlice slice'>
+                            <label for='_sea' class='circle'>Seaside</label>
+                    </li>
+                    <li class='coffeeSlice slice'>
+                            <label for='_coff' class='circle'>Coffee</label>
+                    </li>
+                    <li class='crayonsSlice slice'>
+                            <label for='_cray' class='circle'>Crayons</label>
+                    </li>
+                    <li class='natureSlice slice'>
+                            <label for='_nat' class='circle'>Nature</label>
+                    </li>
+                    <li class='cavernSlice slice'>
+                            <label for='_cave' class='circle'>Cavern</label>
+                    </li>
+                </ul>
+              </nav>
+              </div>
+          </form>
+    </div>
+    <div class="submission-form-container">
+      <form action="/action_page.php">
+          <input type="submit" class="button" value="Submit">
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+function validate_fileupload(fileName)
+{
+    var allowed_extension = "csv";
+    var file_extension = fileName.split('.').pop().toLowerCase();
+    var x = document.getElementsByClassName("incorrect-file-upload");
+    if(allowed_extension.localeCompare(file_extension) == 0)
+        {x.style.display("none");}
+    else
+        {x.style.display("block");}
+}
+
+
+</script>
+
+<script>
+// Get the modal
+var modal = document.getElementById('myModal');
+var btn = document.getElementById("popupbutton");
+var span = document.getElementsByClassName("close")[0];
+// When the user clicks the button, open the modal 
+btn.onclick = function() {
+    modal.style.display = "block";
+}
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>
+
 <h2 class="ptl contrast" id="vision-1">Vision 1: Accessible Food and Drinking Water
 	  <a href="#vision-1" class="header-link"><i class="fa fa-link"></i></a>
 </h2>

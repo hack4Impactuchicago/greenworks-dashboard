@@ -27,3 +27,208 @@ h6:hover .header-link {
   padding-bottom: 10px;
   margin-bottom: 40px;
 }
+
+/*For the modal content*/
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(255,255,255); /* Fallback color */
+    background-color: rgba(255,255,255,0.4); /* White w/ opacity */
+}
+
+.modal-content {
+    position: center;
+    border-radius: 5px;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 5%;
+    border: 1px solid #888;
+    width: 80%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s
+}
+
+@-webkit-keyframes animatetop {
+    from {top:-300px; opacity:0} 
+    to {top:0px; opacity:1}
+}
+
+@keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0px; opacity:1}
+}
+/*form content*/
+
+.container {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+    font-family: verdana, sans-serif;
+}
+
+.graphtypes{
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+}
+
+input[type=radio]{
+      display: inline-block;
+  }
+
+input[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+.incorrect-file-upload{
+    text-decoration-color: #;
+}
+
+
+/*form content/
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+
+/* Color Menu */
+
+.menuopt { 
+    display: none; 
+}
+.circle, .circle:before, .circle:after { 
+    border-radius: 70%; 
+}
+nav.color-wheel {
+	margin: 5em auto;
+	min-width: 16em; 
+    width: 72%; 
+    max-width: 40em;
+}
+nav.color-wheel ul.cirlce {
+	position: relative;
+	padding: 50%;
+	max-width: 0; max-height: 0;
+	box-shadow: 0 0 .5em rgba(0,0,0,.5);
+	list-style: none;
+	background: white;
+}
+nav.color-wheel li.slice {
+	position: absolute;
+	transition: 2s;
+}
+.slice {
+	overflow: hidden;
+	position: absolute;
+	top: 0; left: 0;
+	width: 50%; height: 50%;
+	transform-origin: 100% 100%;
+}
+.seasideSlice { transform: rotate(0deg) skewX(50deg); }
+.coffeeSlice { transform: rotate(-72deg) skewX(50deg); }
+.crayonsSlice { transform: rotate(-144deg) skewX(50deg); }
+.natureSlice { transform: rotate(72deg) skewX(50deg); }
+.cavernSlice { transform: rotate(144deg) skewX(50deg); }
+.magnifiable { height: 100%; }
+
+nav label { cursor: pointer; }
+
+.slice label {
+	display: block;
+	width: 200%; height: 200%;
+	transform: skew(-50deg) rotate(-70deg);
+	box-shadow: 0 0 .1em black;
+	opacity: .5;
+	color: transparent;
+	font-size: .8em;
+	line-height: 1.9;
+	text-align: center;
+	text-decoration: none;
+	transition: 1s;
+}
+.slice label:before {
+	position: absolute;
+	top: 10%; left: 10%;
+	width: 80%; height: 80%;
+	border-radius: 50%;
+	box-shadow: 0 0 1em rgba(0,0,0,.5);
+	background-position: 50% 0;
+	background-repeat: no-repeat;
+	background-size: 35% 35%;
+	content: '';
+}
+.slice label:hover { opacity: 1; }
+
+.seasideSlice label, .seaside:checked ~ nav.color-wheel
+{ background: #f4f5fa; }
+.coffeeSlice label, .coffee:checked ~ nav.color-wheel 
+{ background: #ffeb98; }
+.crayonsSlice label, .crayons:checked ~ nav.color-wheel 
+{ background: #ffb038; }
+.natureSlice label, .nature:checked ~ nav.color-wheel
+{ background: #d3a573; }
+.cavernSlice label, .cavern:checked ~ nav.color-wheel
+{ background: #d9e260; }
+
+.seasideSlice label:before { background: black; }
+.coffeeSlice label:before { background: black; }
+.crayonSlice label:before { background: black; }
+.natureSlice label:before { background: black;}
+.cavernSlice label:before { background: black; }
+
+.slice label:hover:after { opacity: 0; }
+.seaside:checked ~ nav .seasideSlice { transform: skewX(50deg) scale(1.05); }
+.coffee:checked ~ nav .coffeeSlice { transform: rotate(40deg) skewX(50deg) scale(1.05); }
+.crayons:checked ~ nav .crayonsSlice { transform: rotate(80deg) skewX(50deg) scale(1.05); }
+.nature:checked ~ nav .natureSlice { transform: rotate(120deg) skewX(50deg) scale(1.05); }
+.cavern:checked ~ nav .cavernSlice { transform: rotate(160deg) skewX(50deg) scale(1.05); }
+
+.seaside:checked ~ nav .coconut label, 
+.coffee:checked ~ nav .vanilla label, 
+.crayons:checked ~ nav .orange label, 
+.nature:checked ~ nav .almond label,  
+.cavern:checked ~ nav .raspberry label {
+	box-shadow: 0 0 .45em rgba(0,0,0,.5);
+	opacity: 1; color: black;
+}
+
+@media (min-width: 25em) { .slice label { font-size: 1em; line-height: 2.3; } }
+
+@media (min-width: 35em) { .slice label { font-weight: 700; line-height: 2.7; } }
