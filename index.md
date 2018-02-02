@@ -62,11 +62,10 @@ Chart.defaults.global.tooltips.callbacks.label = function (tooltipItem, data) {
     <span class="close">&times;</span>
     <div class="form-container">
         <h2>Greenworks Dashboard: Upload Data</h2>
-          <form action="/parse.py">
+          <form id="CSVForm" action="/parse.py" method="post">
               <label for="fileUpload">CSV File Upload</label>
               <div class="graphtypes">
                   <input type="file" id="fname" name="firstname" onchange="validate_fileupload(this.value);">
-                  <p class="incorrect-file-upload">*NOTE: Incorrect File Upload</p>
               </div>
               <label for="graph-type">Graph Type </label>
               <div class="graphtypes">
@@ -77,55 +76,97 @@ Chart.defaults.global.tooltips.callbacks.label = function (tooltipItem, data) {
               <div class="graphtypes">
                   <textarea id="description" name="subject" style="height:200px"></textarea>
               </div>
-              <div class="circle-color-input graphtypes">
-                <input type='radio' name='opt' id='seaside' class='menuopt seaside'>
-                <input type='radio' name='opt' id='coffee' class='menuopt coffee'>
-                <input type='radio' name='opt' id='crayons' class='menuopt crayons'>
-                <input type='radio' name='opt' id='nature' class='menuopt nature'>
-                <input type='radio' name='opt' id='cavern' class='menuopt cavern'>
-              <nav class="color-wheel">
-                <ul class='circle'>
-                    <li class='seasideSlice slice'>
-                            <label for='_sea' class='circle'>Seaside</label>
-                    </li>
-                    <li class='coffeeSlice slice'>
-                            <label for='_coff' class='circle'>Coffee</label>
-                    </li>
-                    <li class='crayonsSlice slice'>
-                            <label for='_cray' class='circle'>Crayons</label>
-                    </li>
-                    <li class='natureSlice slice'>
-                            <label for='_nat' class='circle'>Nature</label>
-                    </li>
-                    <li class='cavernSlice slice'>
-                            <label for='_cave' class='circle'>Cavern</label>
-                    </li>
-                </ul>
-              </nav>
-              </div>
-          </form>
-    </div>
-    <div class="submission-form-container">
-      <form action="/action_page.php">
-          <input type="submit" class="button" value="Submit">
-      </form>
+            <label for="colorpickerb">Background and Border Color</label>
+            <div class="radioBBcwrap">
+                <div class="radioBBC bbv1">
+                    <input type='radio' name='colorpickerb' class='menuopt' value="">
+                </div>
+                <div class="radioBBC bbv2">
+                    <input type='radio' name='colorpickerb' class='menuopt' value="">
+                </div>
+                <div class="radioBBC bbv3">
+                    <input type='radio' name='colorpickerb' class='menuopt' value="">
+                </div>
+                <div class="radioBBC bbv4">
+                    <input type='radio' name='colorpickerb' class='menuopt' value="">
+                </div>
+                <div class="radioBBC bbv5">
+                    <input type='radio' name='colorpickerb' class='menuopt' value="">
+                </div>
+            </div>
+            <label for="colorpicker">Color Choices</label>
+            <div class="radioColorThemeswrap">
+                <div class="radioColor theme1">
+                    <input type='radio' name='colorpicker' class='menuopt oseaside' value="seaside">
+                    <ul class='radioColor'>
+                        <li class="seaside t1"></li>
+                        <li class="seaside t2"></li>
+                        <li class="seaside t3"></li>
+                        <li class="seaside t4"></li>
+                        <li class="seaside t5"></li>
+                    </ul>
+                </div>
+                <div class="radioColor theme2">
+                    <input type='radio' name='colorpicker' class='menuopt ocrayons' value="crayons">
+                    <ul class='radioColor'>
+                        <li class="crayons t1"></li>
+                        <li class="crayons t2"></li>
+                        <li class="crayons t3"></li>
+                        <li class="crayons t4"></li>
+                        <li class="crayons t5"></li>
+                    </ul>
+                </div>
+                <div class="radioColor theme3">
+                    <input type='radio' name='colorpicker' class='menuopt o' value="nature">
+                    <ul class='radioColor'>
+                        <li class="nature t1"></li>
+                        <li class="nature t2"></li>
+                        <li class="nature t3"></li>
+                        <li class="nature t4"></li>
+                        <li class="nature t5"></li>
+                    </ul>
+                </div>
+                <div class="radioColor theme4">
+                    <input type='radio' name='colorpicker' class='menuopt' value="candy">
+                    <ul class='radioColor'>
+                        <li class="candy t1"></li>
+                        <li class="candy t2"></li>
+                        <li class="candy t3"></li>
+                        <li class="candy t4"></li>
+                        <li class="candy t5"></li>
+                    </ul>
+                </div>
+            </div>
+            <input type="submit" name='Submit' class="button" value="Submit" onclick='javascript: return SubmitForm()'>
+        </form>
     </div>
   </div>
 </div>
 
 <script>
-function validate_fileupload(fileName)
+
+function SubmitForm()
 {
-    var allowed_extension = "csv";
-    var file_extension = fileName.split('.').pop().toLowerCase();
-    var x = document.getElementsByClassName("incorrect-file-upload");
-    if(allowed_extension.localeCompare(file_extension) == 0)
-        {x.style.display("none");}
-    else
-        {x.style.display("block");}
+    if(document.forms['CSVForm'].onsubmit())
+    {
+        document.forms['CSVForm'].action='parse.py';
+        document.forms['CSVForm'].target='_blank';
+        document.forms['CSVForm'].submit();
+        document.forms['CSVForm'].action='csvToDictionary.py';
+        document.forms['CSVForm'].target='_blank';
+        document.forms['CSVForm'].submit();
+    }
+    return true;
 }
+</script>
 
-
+<script>
+    var frmvalidator = new Validator("CSVForm");
+    frmvalidator.EnableOnPageErrorDisplay();
+    //frmvalidator.EnableMsgsTogether();
+    frmvalidator.addValidation("","req","Please provide your name");
+    frmvalidator.addValidation("graphtype","req","Please provide your email address");
+    frmvalidator.addValidation("message","maxlen=2048","The message is too long!(more than 2KB!)");
 </script>
 
 <script>
