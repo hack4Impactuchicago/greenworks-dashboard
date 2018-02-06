@@ -26,7 +26,6 @@ Chart.scaleService.updateScaleDefaults('linear', {
 		}
 	}
 })
-
 // Format numbers with commas in tooltips ======================================
 Chart.defaults.global.tooltips.callbacks.label = function (tooltipItem, data) {
 	var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
@@ -62,21 +61,26 @@ Chart.defaults.global.tooltips.callbacks.label = function (tooltipItem, data) {
     <span class="close">&times;</span>
     <div class="form-container">
         <h2>Greenworks Dashboard: Upload Data</h2>
-          <form id="CSVForm" action="/parse.py" method="post">
+          <form id="CSVForm" method="post" >
               <label for="fileUpload">CSV File Upload</label>
               <div class="graphtypes">
-                  <input type="file" id="fname" name="firstname" onchange="validate_fileupload(this.value);">
+                  <input type="file" id="fileUpload" name="firstname">
               </div>
               <label for="graph-type">Graph Type </label>
               <div class="graphtypes">
                   <input type="radio" id="graph-type" name="graphtype" value="line">Line Graph<br />
                   <input type="radio" id="graph-type" name="graphtype" value="bar">Bar Graph<br />
               </div>
+              <label for="title">Title</label>
+              <div class="graphtypes">
+                  <input type="text" id="title" name="subject" />
+              </div>
               <label for="description">Description</label>
               <div class="graphtypes">
                   <textarea id="description" name="subject" style="height:200px"></textarea>
               </div>
             <label for="colorpickerb">Background and Border Color</label>
+            <input type="checkbox" name="colorpickerb" class="default" />Check if you want default colors set.
             <div class="radioBBcwrap">
                 <div class="radioBBC bbv1">
                     <input type='radio' name='colorpickerb' class='menuopt' value="">
@@ -95,46 +99,47 @@ Chart.defaults.global.tooltips.callbacks.label = function (tooltipItem, data) {
                 </div>
             </div>
             <label for="colorpicker">Color Choices</label>
+            <input type="checkbox" name="colorpickerb" class="default" />Check if you want default colors set.
             <div class="radioColorThemeswrap">
                 <div class="radioColor theme1">
                     <input type='radio' name='colorpicker' class='menuopt oseaside' value="seaside">
-                    <ul class='radioColor'>
+                    <!---<ul class='radioColorH Seaside'>
                         <li class="seaside t1"></li>
                         <li class="seaside t2"></li>
                         <li class="seaside t3"></li>
                         <li class="seaside t4"></li>
                         <li class="seaside t5"></li>
-                    </ul>
+                    </ul>-->
                 </div>
                 <div class="radioColor theme2">
                     <input type='radio' name='colorpicker' class='menuopt ocrayons' value="crayons">
-                    <ul class='radioColor'>
+                    <!--<ul class='radioColorH Crayons'>
                         <li class="crayons t1"></li>
                         <li class="crayons t2"></li>
                         <li class="crayons t3"></li>
                         <li class="crayons t4"></li>
                         <li class="crayons t5"></li>
-                    </ul>
+                    </ul>-->
                 </div>
                 <div class="radioColor theme3">
-                    <input type='radio' name='colorpicker' class='menuopt o' value="nature">
-                    <ul class='radioColor'>
+                    <input type='radio' name='colorpicker' class='menuopt onature' value="nature">
+                    <!--<ul class='radioColorH Nature'>
                         <li class="nature t1"></li>
                         <li class="nature t2"></li>
                         <li class="nature t3"></li>
                         <li class="nature t4"></li>
                         <li class="nature t5"></li>
-                    </ul>
+                    </ul>-->
                 </div>
                 <div class="radioColor theme4">
-                    <input type='radio' name='colorpicker' class='menuopt' value="candy">
-                    <ul class='radioColor'>
+                    <input type='radio' name='colorpicker' class='menuopt ocandy' value="candy">
+                    <!--<ul class='radioColorH Candy'>
                         <li class="candy t1"></li>
                         <li class="candy t2"></li>
                         <li class="candy t3"></li>
                         <li class="candy t4"></li>
                         <li class="candy t5"></li>
-                    </ul>
+                    </ul>-->
                 </div>
             </div>
             <input type="submit" name='Submit' class="button" value="Submit" onclick='javascript: return SubmitForm()'>
