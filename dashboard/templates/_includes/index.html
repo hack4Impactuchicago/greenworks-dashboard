@@ -30,8 +30,7 @@ Chart.defaults.global.tooltips.callbacks.label = function (tooltipItem, data) {
 
 <div class= "row">
   <div class="medium-16 column">
-    {% capture about_content %}{% include about.md %}{% endcapture %}
-    {{ about_content | markdownify }}
+    {% include about.md %}
 	</div>
 	<div class="medium-8 column">
 	  <aside id="secondary" class="related pll-mu">	    
@@ -103,43 +102,15 @@ Chart.defaults.global.tooltips.callbacks.label = function (tooltipItem, data) {
             <div class="radioColorThemeswrap">
                 <div class="radioColor theme1">
                     <input type='radio' name='colorpicker' class='menuopt oseaside' value="seaside">
-                    <!---<ul class='radioColorH Seaside'>
-                        <li class="seaside t1"></li>
-                        <li class="seaside t2"></li>
-                        <li class="seaside t3"></li>
-                        <li class="seaside t4"></li>
-                        <li class="seaside t5"></li>
-                    </ul>-->
                 </div>
                 <div class="radioColor theme2">
                     <input type='radio' name='colorpicker' class='menuopt ocrayons' value="crayons">
-                    <!--<ul class='radioColorH Crayons'>
-                        <li class="crayons t1"></li>
-                        <li class="crayons t2"></li>
-                        <li class="crayons t3"></li>
-                        <li class="crayons t4"></li>
-                        <li class="crayons t5"></li>
-                    </ul>-->
                 </div>
                 <div class="radioColor theme3">
                     <input type='radio' name='colorpicker' class='menuopt onature' value="nature">
-                    <!--<ul class='radioColorH Nature'>
-                        <li class="nature t1"></li>
-                        <li class="nature t2"></li>
-                        <li class="nature t3"></li>
-                        <li class="nature t4"></li>
-                        <li class="nature t5"></li>
-                    </ul>-->
                 </div>
                 <div class="radioColor theme4">
                     <input type='radio' name='colorpicker' class='menuopt ocandy' value="candy">
-                    <!--<ul class='radioColorH Candy'>
-                        <li class="candy t1"></li>
-                        <li class="candy t2"></li>
-                        <li class="candy t3"></li>
-                        <li class="candy t4"></li>
-                        <li class="candy t5"></li>
-                    </ul>-->
                 </div>
             </div>
             <input type="submit" name='Submit' class="button" value="Submit" onclick='javascript: return SubmitForm()'>
@@ -164,14 +135,14 @@ function SubmitForm()
 }
 </script>-->
 
-<script>
+<!--<script>
     var frmvalidator = new Validator("CSVForm");
     frmvalidator.EnableOnPageErrorDisplay();
     //frmvalidator.EnableMsgsTogether();
     frmvalidator.addValidation("","req","Please provide your name");
     frmvalidator.addValidation("graphtype","req","Please provide your email address");
     frmvalidator.addValidation("message","maxlen=2048","The message is too long!(more than 2KB!)");
-</script>
+</script>-->
 
 <script>
 // Get the modal

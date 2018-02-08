@@ -1,25 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    {% include head.html %}
+    {% include '_includes/head.html' %}
   </head>
 
   <body>
-	{% include analytics.html %}
+	{% include '_includes/analytics.html' %}
     <div class="page" id="page">
-      {% include header.html %}
+      {% include '_includes/header.html' %}
 
       <article data-swiftype-name="body" data-swiftype-type="text">
         <div class="row">
           <div class="large-24 columns ptxl">
-            <!-- <h1 class="contrast">{{ page.title }}</h1> -->
-            {{ content }}
+            {% include '_includes/index.html' %}
           </div>
         </div>
       </article>
     </div><!-- End #page -->
-    {% include footer.html %}
+    {% include '_includes/footer.html' %}
 
-    {% include scripts.html %}
+    {% include '_includes/scripts.html' %}
   </body>
 </html>
