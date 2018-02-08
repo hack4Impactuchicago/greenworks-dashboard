@@ -1,5 +1,4 @@
 # Written by: Jersey Fonseca, Samuel Sagawa, James Liu
-
 import csv
 import os
 

@@ -1,8 +1,3 @@
----
-layout: default
-title: Greenworks Dashboard
----
-
 <script>
 // TODO This can be moved to its own file and included with scripts.html
 
@@ -74,6 +69,11 @@ Chart.defaults.global.tooltips.callbacks.label = function (tooltipItem, data) {
               <label for="title">Title</label>
               <div class="graphtypes">
                   <input type="text" id="title" name="subject" />
+              </div>
+              <label for="title">Axis Titles</label>
+              <div class="graphtypes">
+                  X: <input type="text" id="title" name="subject" /><br/>
+                  Y: <input type="text" id="title" name="subject" /><br/>
               </div>
               <label for="description">Description</label>
               <div class="graphtypes">
@@ -148,22 +148,21 @@ Chart.defaults.global.tooltips.callbacks.label = function (tooltipItem, data) {
   </div>
 </div>
 
-<script>
-
+<!--<script>
 function SubmitForm()
 {
     if(document.forms['CSVForm'].onsubmit())
     {
-        document.forms['CSVForm'].action='parse.py';
+        document.forms['CSVForm'].action='./_includes/parse.py';
         document.forms['CSVForm'].target='_blank';
         document.forms['CSVForm'].submit();
-        document.forms['CSVForm'].action='csvToDictionary.py';
+        document.forms['CSVForm'].action={{ url_for('handle_data') }};
         document.forms['CSVForm'].target='_blank';
         document.forms['CSVForm'].submit();
     }
     return true;
 }
-</script>
+</script>-->
 
 <script>
     var frmvalidator = new Validator("CSVForm");

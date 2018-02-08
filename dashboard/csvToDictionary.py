@@ -1,6 +1,5 @@
 import csv
 
-
 colorOpts = ['rgba(150, 201, 255, 1)',
              'rgba(168, 191, 18, 1)',
              'rgba(249, 147, 0, 1)',
