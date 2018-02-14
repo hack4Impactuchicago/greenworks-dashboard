@@ -45,7 +45,7 @@ with open('data.csv') as data:
 # This creates an HTML file and fills it with blocks of data
 # from the inputted CSV file.
 index = 1
-f = open('templates/_includes/datasets.html', 'w')
+f = open('_low_carbon_commute.html', 'w')
 f.write("datasets: [\n")
 for labels in rows[0]:
     if labels == 'Year' or labels == '' or labels == ' ':
