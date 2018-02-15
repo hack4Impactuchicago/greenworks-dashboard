@@ -30,10 +30,15 @@ Chart.defaults.global.tooltips.callbacks.label = function (tooltipItem, data) {
 
 <div class= "row">
   <div class="medium-16 column">
-    {% include about.md %}
+		<h2>About</h2>
+			<p>The Greenworks Dashboard is a joint project between the City of Philadelphia's <a>Office of Sustainability](https://beta.phila.gov/departments/office-of-sustainability/programs/greenworks/)</a> and <a>[Office of Open Data and Digital Transformation](https://beta.phila.gov/departments/office-of-the-chief-administrative-officer/functions/office-of-open-data-and-digital-transformation/)</a>.</p>
+			<p>This dashboard provides easy-to-use responsive visualization tools for viewing data about the eight sustainability visions set in <a>[Greenworks: A Vision for a Sustainable Philadelphia](https://beta.phila.gov/documents/greenworks-a-vision-for-a-sustainable-philadelphia/)</a>.</p>
+			<b>Note:</b> This data will be updated as available on an ongoing basis.
+		<h5>How to use</h5>
+			<p>Click the color blocks in any chart legend to add or remove that data from the chart.</p>
 	</div>
 	<div class="medium-8 column">
-	  <aside id="secondary" class="related pll-mu">	    
+	  <aside id="secondary" class="related pll-mu">
         <!-- <h2>About the Application</h2> -->
 	    <p>This is an open source project that uses the City of Philadelphia <a href="https://github.com/CityOfPhiladelphia/patterns">patterns</a>, <a href="http://jekyllrb.com/">Jekyll</a>, and <a href="http://www.chartjs.org/">Chart.js</a>. </p>
 	    <a href="http://beta.phila.gov/feedback" class="button icon">Leave Feedback<i class="fa fa-comment"></i></a>
@@ -60,7 +65,7 @@ Chart.defaults.global.tooltips.callbacks.label = function (tooltipItem, data) {
               <div class="graphtypes">
                   <input type="file" id="fileUpload" name="firstname">
               </div>
-              <!--<label for="graph-type">Graph Type </label>
+              <label for="graph-type">Graph Type </label>
               <div class="graphtypes">
                   <input type="radio" id="graph-type" name="graphtype" value="line">Line Graph<br />
                   <input type="radio" id="graph-type" name="graphtype" value="bar">Bar Graph<br />
@@ -112,28 +117,28 @@ Chart.defaults.global.tooltips.callbacks.label = function (tooltipItem, data) {
                 <div class="radioColor theme4">
                     <input type='radio' name='colorpicker' class='menuopt ocandy' value="candy">
                 </div>
-            </div>-->
+            </div>
             <input type="submit" name='Submit' class="button" value="Submit" onclick='javascript: return SubmitForm()'>
         </form>
     </div>
   </div>
 </div>
 
-<script>
+{ # <!--<script>
 function SubmitForm()
 {
     if(document.forms['CSVForm'].onsubmit())
     {
-        document.forms['CSVForm'].action='./_includes/parse.py';
+        document.forms['CSVForm'].action='parse.py';
         document.forms['CSVForm'].target='_blank';
         document.forms['CSVForm'].submit();
-        document.forms['CSVForm'].action={{ url_for('handle_data') }};
-        document.forms['CSVForm'].target='_blank';
+        document.forms['CSVForm'].action='./';
+        document.forms['CSVForm'].target='';
         document.forms['CSVForm'].submit();
     }
     return true;
 }
-</script>
+</script>-->
 
 <!--<script>
     var frmvalidator = new Validator("CSVForm");
@@ -142,14 +147,14 @@ function SubmitForm()
     frmvalidator.addValidation("","req","Please provide your name");
     frmvalidator.addValidation("graphtype","req","Please provide your email address");
     frmvalidator.addValidation("message","maxlen=2048","The message is too long!(more than 2KB!)");
-</script>-->
+</script>--> # }
 
 <script>
 // Get the modal
 var modal = document.getElementById('myModal');
 var btn = document.getElementById("popupbutton");
 var span = document.getElementsByClassName("close")[0];
-// When the user clicks the button, open the modal 
+// When the user clicks the button, open the modal
 btn.onclick = function() {
     modal.style.display = "block";
 }
@@ -170,14 +175,13 @@ window.onclick = function(event) {
 </h2>
 <div class="row pbxl ptl">
   <div class="medium-16 column prxl">
-    {% include charts/1-snap-participation.html %}
+    {# include charts/1-snap-participation.html #}
   </div>
   <div class="medium-8 column end">
     <aside class="related pll-mu">
       <h3 class="h4 pbl">All Philadelphians have access to healthy, affordable, and sustainable food and drinking water.</h3>
-			<!-- <h4 class="h6">Note</h4> -->
+			{#<!-- <h4 class="h6">Note</h4> -->#}
 			<p>Philadelphians can use <a href="http://www.fns.usda.gov/snap/supplemental-nutrition-assistance-program-snap">Supplemental Nutrition Assistance Program (SNAP)</a> benefits to purchase healthy, locally-grown food at <a href="http://thefoodtrust.org/uploads/media_items/philly-food-bucks-brochure-english.original.pdf">many farmers markets</a> citywide. Philly Food Bucks is a healthy food incentive program launched in 2010 to increase the purchasing power of SNAP customers. For every $5 that SNAP customers spend using their benefits at a participating market site, they receive a $2 Philly Food Bucks coupon for fresh fruits and vegetables.</p>
-
 	  	<h4 class="h6">Source</h4>
 	  	<p>Get Healthy Philly</p>
     </aside>
@@ -188,13 +192,12 @@ window.onclick = function(event) {
 <div class="medium-24 column top">
 	<a class="float-right" href="#top"><i class="fa fa-arrow-up"></i> <span class="to-top">back to top</span></a>
 </div>
-
 <h2 class="contrast" id="vision-2">Vision 2: Healthy Outdoor and Indoor Air
 	<a href="#vision-2" class="header-link"><i class="fa fa-link"></i></a>
 </h2>
 <div class="row pbxl ptl">
   <div class="medium-16 column prxl">
-    {% include charts/2-outdoor-air-quality.html %}
+    {# include charts/2-outdoor-air-quality.html #}
   </div>
   <div class="medium-8 column end">
     <aside class="related pll-mu">
@@ -218,7 +221,7 @@ window.onclick = function(event) {
 </h2>
 <div class="row pbxl ptl">
   <div class="medium-16 column prxl">
-    {% include charts/3-citywide-energy-usage.html %}
+    {# include charts/3-citywide-energy-usage.html #}
   </div>
   <div class="medium-8 column end">
     <aside class="related pll-mu">
@@ -243,7 +246,7 @@ window.onclick = function(event) {
 </h2>
 <div class="row pbxl ptl">
   <div class="medium-16 column prxl">
-    {% include charts/4-philadelphia-carbon-footprint.html %}
+    {# include charts/4-philadelphia-carbon-footprint.html #}
   </div>
   <div class="medium-8 column end">
     <aside class="related pll-mu">
@@ -266,7 +269,7 @@ window.onclick = function(event) {
 </h2>
 <div class="row pbxl ptl">
   <div class="medium-16 column prxl">
-    {% include charts/5-planted-trees.html %}
+    {# include charts/5-planted-trees.html #}
   </div>
   <div class="medium-8 column end">
     <aside class="related pll-mu">
@@ -289,7 +292,7 @@ window.onclick = function(event) {
 </h2>
 <div class="row pbxl ptl">
   <div class="medium-16 column prxl">
-    {% include charts/6-low-carbon-commute.html %}
+    {# include charts/6-low-carbon-commute.html #}
   </div>
   <div class="medium-8 column end">
     <aside class="related pll-mu">
@@ -313,7 +316,7 @@ window.onclick = function(event) {
 </h2>
 <div class="row pbxl ptl">
   <div class="medium-16 column prxl">
-    {% include charts/7-waste-diversion-rate.html %}
+    {# include charts/7-waste-diversion-rate.html #}
   </div>
   <div class="medium-8 column end">
     <aside class="related pll-mu">
@@ -336,7 +339,7 @@ window.onclick = function(event) {
 </h2>
 <div class="row pbxl ptl">
   <div class="medium-16 column prxl">
-    {% include charts/8-engaged-philadelphians.html %}
+    {# include charts/8-engaged-philadelphians.html #}
   </div>
   <div class="medium-8 column">
     <aside class="related pll-mu">

@@ -1,9 +1,9 @@
 import json
 import csvToDictionary as reader
-from flask import Flask, request, render_template, M arkup
+from flask import Flask, request, render_template, Markup
 app = Flask(__name__)
 
-@app.route('/templates/<path::path>')
+@app.route('/')
 def landing():
     return render_template("default.html");
 

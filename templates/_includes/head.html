@@ -2,13 +2,14 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }} | phila.gov</title>
+<title> Greenworks Dashboard | Greenworks Dashboard | phila.gov</title>
+{# <!--<title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }} | phila.gov</title>--> #}
 <link rel='icon' type='image/x-icon' href="https://cityofphiladelphia.github.io/patterns/images/favicon.ico">
 <meta name="description" content="Greenworks: A better vision for a Sustainable Philadelphia">
 <meta property="og:title" content="Greenworks Dashboard"/>
-<meta property="og:url" content="https://cityofphiladelphia.github.io{{ site.baseurl }}"/>
+<meta property="og:url" content="https://cityofphiladelphia.github.io{{ url_for('landing')}}"/>
 <meta property="og:site_name" content="Greenworks | Phila.gov"/>
-<meta property="og:image" content="https://cityofphiladelphia.github.io{{ site.baseurl }}/_images/demo.gif" />
+<meta property="og:image" content="https://cityofphiladelphia.github.io{{ url_for('landing')}}/_images/demo.gif" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:site" content="@PhiladelphiaGov" />
 <meta name="twitter:creator" content="@GreenworksPhila" />
@@ -21,11 +22,11 @@
 
 <!--pattern stylesheet includes foundation css -->
 <link rel="stylesheet" href="//cityofphiladelphia.github.io/patterns/dist/1.4.1/css/patterns.css">
-<link rel="stylesheet" href="{{ site.baseurl }}/css/styles.css">
+<link rel="stylesheet" href="{{url_for('landing')}}/css/styles.css">
 
 <!-- include in <head> so we don't need document.ready -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.js"></script>
-<script src="{{ site.baseurl }}/scripts/util.js"></script>
-<script src="{{ site.baseurl }}/scripts/gen_validatorv4.js"></script>
+<script src="../static/scripts/util.js"></script>
+<script src="../static/scripts/gen_validatorv4.js"></script>
 
 <link rel="canonical" href="">
