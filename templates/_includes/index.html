@@ -31,15 +31,21 @@ Chart.defaults.global.tooltips.callbacks.label = function (tooltipItem, data) {
 <div class= "row">
   <div class="medium-16 column">
 		<h2>About</h2>
-			<p>The Greenworks Dashboard is a joint project between the City of Philadelphia's <a>Office of Sustainability](https://beta.phila.gov/departments/office-of-sustainability/programs/greenworks/)</a> and <a>[Office of Open Data and Digital Transformation](https://beta.phila.gov/departments/office-of-the-chief-administrative-officer/functions/office-of-open-data-and-digital-transformation/)</a>.</p>
-			<p>This dashboard provides easy-to-use responsive visualization tools for viewing data about the eight sustainability visions set in <a>[Greenworks: A Vision for a Sustainable Philadelphia](https://beta.phila.gov/documents/greenworks-a-vision-for-a-sustainable-philadelphia/)</a>.</p>
-			<b>Note:</b> This data will be updated as available on an ongoing basis.
-		<h5>How to use</h5>
+			<p>The Greenworks Dashboard is a joint project between the City of Philadelphia's
+				<a href="https://beta.phila.gov/departments/office-of-sustainability/programs/greenworks/">
+					Office of Sustainability
+				</a> and
+				<a href="https://beta.phila.gov/departments/office-of-the-chief-administrative-officer/functions/office-of-open-data-and-digital-transformation/">
+					Office of Open Data and Digital Transformation
+				</a>.
+			</p>
+			<p>This dashboard provides easy-to-use responsive visualization tools for viewing data about the eight sustainability visions set in <a href="https://beta.phila.gov/documents/greenworks-a-vision-for-a-sustainable-philadelphia/">Greenworks: A Vision for a Sustainable Philadelphia</a>.</p>
+			<p><b>Note:</b> This data will be updated as available on an ongoing basis.</p>
+		<h3>How to use</h3>
 			<p>Click the color blocks in any chart legend to add or remove that data from the chart.</p>
 	</div>
 	<div class="medium-8 column">
 	  <aside id="secondary" class="related pll-mu">
-        <!-- <h2>About the Application</h2> -->
 	    <p>This is an open source project that uses the City of Philadelphia <a href="https://github.com/CityOfPhiladelphia/patterns">patterns</a>, <a href="http://jekyllrb.com/">Jekyll</a>, and <a href="http://www.chartjs.org/">Chart.js</a>. </p>
 	    <a href="http://beta.phila.gov/feedback" class="button icon">Leave Feedback<i class="fa fa-comment"></i></a>
 	    <br>
@@ -47,10 +53,10 @@ Chart.defaults.global.tooltips.callbacks.label = function (tooltipItem, data) {
 	    <br>
 	    <a href="https://www.opendataphilly.org/dataset/greenworks-dashboard" class="button icon">Download Data<i class="fa fa-table"></i></a>
         <br>
-        <button id="popupbutton" class="button icon">
+        <a id="popupbutton" class="button icon">
             Upload Data
             <i class="fa fa-cloud-upload"></i>
-        </button>
+        </a>
 	  </aside>
 	</div>
 </div>
@@ -59,16 +65,12 @@ Chart.defaults.global.tooltips.callbacks.label = function (tooltipItem, data) {
   <div class="modal-content">
     <span class="close">&times;</span>
     <div class="form-container">
-        <h2>Greenworks Dashboard: Upload Data</h2>
-          <form id="CSVForm" method="post" >
+        <h2 class="formHeader">Greenworks Dashboard: Upload Data</h2>
+				<h4 class="formHeader">**Note: Upload permitted for specific individuals only!</h4>
+          <form action="../static/_data" id="CSVForm" method="post" >
               <label for="fileUpload">CSV File Upload</label>
-              <div class="graphtypes">
-                  <input type="file" id="fileUpload" name="firstname">
-              </div>
-              <label for="graph-type">Graph Type </label>
-              <div class="graphtypes">
-                  <input type="radio" id="graph-type" name="graphtype" value="line">Line Graph<br />
-                  <input type="radio" id="graph-type" name="graphtype" value="bar">Bar Graph<br />
+              <div class="upload">
+                  <input type="file" id="fileupload" accept=".csv" name="fileUpload">
               </div>
               <label for="title">Title</label>
               <div class="graphtypes">
@@ -124,31 +126,6 @@ Chart.defaults.global.tooltips.callbacks.label = function (tooltipItem, data) {
   </div>
 </div>
 
-{ # <!--<script>
-function SubmitForm()
-{
-    if(document.forms['CSVForm'].onsubmit())
-    {
-        document.forms['CSVForm'].action='parse.py';
-        document.forms['CSVForm'].target='_blank';
-        document.forms['CSVForm'].submit();
-        document.forms['CSVForm'].action='./';
-        document.forms['CSVForm'].target='';
-        document.forms['CSVForm'].submit();
-    }
-    return true;
-}
-</script>-->
-
-<!--<script>
-    var frmvalidator = new Validator("CSVForm");
-    frmvalidator.EnableOnPageErrorDisplay();
-    //frmvalidator.EnableMsgsTogether();
-    frmvalidator.addValidation("","req","Please provide your name");
-    frmvalidator.addValidation("graphtype","req","Please provide your email address");
-    frmvalidator.addValidation("message","maxlen=2048","The message is too long!(more than 2KB!)");
-</script>--> # }
-
 <script>
 // Get the modal
 var modal = document.getElementById('myModal');
@@ -169,6 +146,7 @@ window.onclick = function(event) {
     }
 }
 </script>
+
 
 <h2 class="ptl contrast" id="vision-1">Vision 1: Accessible Food and Drinking Water
 	  <a href="#vision-1" class="header-link"><i class="fa fa-link"></i></a>
