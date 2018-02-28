@@ -1,4 +1,5 @@
 import csv
+import parse as parser
 
 colorOpts = ['rgba(150, 201, 255, 1)',
              'rgba(168, 191, 18, 1)',
@@ -8,20 +9,20 @@ colorOpts = ['rgba(150, 201, 255, 1)',
              'rgba(239, 36, 119, 1)',
              'rgba(231, 73, 75, 1)',
              'rgba(54, 162, 235, 1)']
-        
+
 def colorPicker(counter):
     if(counter < len(colorOpts)):
         return colorOpts[counter]
     else:
         return colorOpts[counter-len(colorOpts)]
-        
+
 
 def csvToDict(filename):
     with open(filename, mode='r') as infile:
         reader = csv.reader(infile)
 
         cols = zip(*reader)
-                     
+
         data=[]
         counter=0;
         for c in cols:
@@ -35,7 +36,7 @@ def csvToDict(filename):
                 'borderWidth':0})
             counter+=1
 
-            
+
         opts={
           'type':'bar',
           'data':{'labels':data[0]['data'],
@@ -58,7 +59,7 @@ def csvToDict(filename):
 
     return opts
     #print(opts)
-            
+
 #options=csvToDict('planted_trees.csv')
 #print(options)
 

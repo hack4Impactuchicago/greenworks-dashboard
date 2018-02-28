@@ -37,25 +37,24 @@ def ExtractColumn (file, index):
                 coordList.append(row[index])
             return(", ".join(coordList))
 
-# This opens the csv file and grabs the first row from it #
-with open('planted_trees.csv') as data:
-    read_rows = csv.reader(data, delimiter=',', quotechar='|')
-    rows = list(read_rows)
-
-# This creates an HTML file and fills it with blocks of data
+def parseCSV():
+    # This opens the csv file and grabs the first row from it #
+    with open('planted_trees.csv') as data:
+        read_rows = csv.reader(data, delimiter=',', quotechar='|')
+        rows = list(read_rows)
+        # This creates an HTML file and fills it with blocks of data
 # from the inputted CSV file.
-index = 1
-f = open('planted_trees.html', 'w')
-f.write("datasets: [\n")
-for labels in rows[0]:
-    if labels == 'Year' or labels == '' or labels == ' ':
-        continue
-    else:
-        dataset = """{\nlabel: '%s',\ndata: [%s],\n%s\nborderWidth: 1\n},\n""" % (labels, ExtractColumn('planted_trees.csv', index), ChooseColor(colors, 1))
-        index += 1
-        f.write(dataset)
-
-# This removes the final comma and closes the file #
-f.seek(-2, os.SEEK_END)
-f.truncate()
-f.close()
+    index = 1
+    f = open('planted_trees.html', 'w')
+    f.write("datasets: [\n")
+    for labels in rows[0]:
+        if labels == 'Year' or labels == '' or labels == ' ':
+            continue
+        else:
+            dataset = """{\nlabel: '%s',\ndata: [%s],\n%s\nborderWidth: 1\n},\n""" % (labels, ExtractColumn('planted_trees.csv', index), ChooseColor(colors, 1))
+            index += 1
+            f.write(dataset)
+        # This removes the final comma and closes the file #
+            f.seek(-2, os.SEEK_END)
+            f.truncate()
+            f.close()
