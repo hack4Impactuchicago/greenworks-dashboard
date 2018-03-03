@@ -3,7 +3,7 @@ import csv
 import os
 
 # These are the colors that will be chosen from #
-colors = ['rgba(168, 191, 18, 0.7)', 'rgba(168, 191, 18, 1)',
+colorsB = ['rgba(168, 191, 18, 0.7)', 'rgba(168, 191, 18, 1)',
           'rgba(189, 187, 254, 0.7)', 'rgba(189, 187, 254, 1)',
           'rgba(254, 148, 144, 0.7)', 'rgba(254, 148, 144, 1)',
           'rgba(1, 188, 144, 0.7)', 'rgba(1, 188, 144, 1)',
@@ -12,15 +12,15 @@ colors = ['rgba(168, 191, 18, 0.7)', 'rgba(168, 191, 18, 1)',
 # This function chooses the color #
 def ChooseColor (colors, choice):
     if choice == 1:
-        values = "backgroundColor: '%s',\nborderColor: '%s'," % (colors[0], colors[1])
+        values = "backgroundColor: '%s';\nborderColor: '%s';" % (colorsBBC[0], colorsBBC[1])
     elif choice == 2:
-        values = "backgroundColor: '%s',\nborderColor: '%s'," % (colors[2], colors[3])
+        values = "backgroundColor: '%s';\nborderColor: '%s';" % (colorsBBC[2], colorsBBC[3])
     elif choice == 3:
-        values = "backgroundColor: '%s',\nborderColor: '%s'," % (colors[4], colors[5])
+        values = "backgroundColor: '%s';\nborderColor: '%s';" % (colorsBBC[4], colorsBBC[5])
     elif choice == 4:
-        values = "backgroundColor: '%s',\nborderColor: '%s'," % (colors[6], colors[7])
+        values = "backgroundColor: '%s';\nborderColor: '%s';" % (colorsBBC[6], colorsBBC[7])
     elif choice == 5:
-        values = "backgroundColor: '%s',\nborderColor: '%s'," % (colors[8], colors[9])
+        values = "backgroundColor: '%s';\nborderColor: '%s';" % (colorsBBC[8], colorsBBC[9])
     else:
         return "Invalid choice number."
 

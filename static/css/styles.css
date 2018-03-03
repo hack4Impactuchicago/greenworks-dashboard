@@ -280,9 +280,6 @@ input[type="radio"]:not(:disabled){
 }
 
 input[type="radio"]:disabled{
-  color: hsla(150, 5%, 75%, 1);
-  border-color: hsla(150, 5%, 75%, 1);
-  box-shadow: none;
   cursor: not-allowed;
 }
 
@@ -294,6 +291,10 @@ label.radioBBC {
   text-align: center;
   position: relative;
   box-shadow: 0px 3px 10px -2px rgba(161, 170, 166, 0.5);
+}
+
+input[type="radio"]:disabled + label.radioBBC{
+  opacity: 0.25;
 }
 
 input[type="radio"]:checked + label.radioBBC {
@@ -340,6 +341,10 @@ label.radioColor p{
   border-radius: 5px;
   margin-top: 5%;
   margin-bottom: 5%;
+}
+
+input[type="radio"]:disabled + label.radioColor{
+  opacity: 0.25;
 }
 
 .theme1{background-color: #49A596;}
@@ -390,6 +395,10 @@ input[type=submit] {
 input[type=submit]:hover {
     border-color: #2176d2;
     color: #2176d2;
+}
+
+input[type=text].invalid, textarea.invalid{
+	background-color: 2px solid red;
 }
 
 

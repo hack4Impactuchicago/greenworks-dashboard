@@ -67,7 +67,7 @@ Chart.defaults.global.tooltips.callbacks.label = function (tooltipItem, data) {
     <div class="form-container">
         <h2 class="formHeader">Greenworks Dashboard: Upload Data</h2>
 				<h4 class="formHeader">**Note: Upload permitted for specific individuals only!</h4>
-          <form action="../static/_data" id="CSVForm" method="post" class="inner-form-container">
+          <form id="CSVForm" action="/" method="post" class="inner-form-container">
 							<div class="input-div formItems">
 								<input type="file" name="Upload" id="fileUpload" accept=".csv" class="inputfile inputfile-1"/>
 								<label for="fileUpload"><span>Choose a CSV file!</span></label>
@@ -77,10 +77,10 @@ Chart.defaults.global.tooltips.callbacks.label = function (tooltipItem, data) {
                   <input type="text" id="title" name="subject" />
               </div>
               <div class="graphtypes formItems">
-									<label for="axis-title">Axis Titles</label>
+									<label>Axis Titles</label>
 									<div class="atitles">
-										<span class="alines">X:</span><input type="text" id="axis-title" class="axisTitle" name="subject-x" /><br/>
-                  	<span class="alines">Y:</span><input type="text" id="axis-title" class="axisTitle" name="subject-y" /><br/>
+										<span class="alines">X:</span><input type="text" id="axis-title-1" class="axisTitle" name="subject-x" /><label for="axis-title-1"></label><br/>
+                  	<span class="alines">Y:</span><input type="text" id="axis-title-2" class="axisTitle" name="subject-y" /><label for="axis-title-2"></label><br/>
 									</div>
 							</div>
 							<div class="graphtypes formItems">
@@ -176,7 +176,7 @@ Chart.defaults.global.tooltips.callbacks.label = function (tooltipItem, data) {
 							</section>
 					</div>
 						<div class="input-div">
-							<input type="submit" name='Submit' value="Submit" onsubmit="return validateInputs() && validateCredentials()">
+							<input type="submit" name='Submit' value="Submit" onsubmit="return validateInputs()">
 						</div>
         </form>
     </div>
@@ -203,6 +203,34 @@ window.onclick = function(event) {
         modal.style.display = "none";
     }
 }
+
+</script>
+
+<script>
+
+$('#title').on('input', function() {
+	var is_name=$(this).val();
+	if(is_name){input.removeClass("invalid").addClass("valid");}
+	else{input.removeClass("valid").addClass("invalid");}
+});
+
+$('#axis-title-1').on('input', function() {
+	var is_name=$(this).val();
+	if(is_name){input.removeClass("invalid").addClass("valid");}
+	else{input.removeClass("valid").addClass("invalid");}
+});
+
+$('#axis-title-2').on('input', function() {
+	var is_name=$(this).val();
+	if(is_name){input.removeClass("invalid").addClass("valid");}
+	else{input.removeClass("valid").addClass("invalid");}
+});
+
+$('#description').on('input', function() {
+	var is_name=$(this).val();
+	if(is_name){input.removeClass("invalid").addClass("valid");}
+	else{input.removeClass("valid").addClass("invalid");}
+});
 
 </script>
 
@@ -237,7 +265,6 @@ $('#DefaultBBC').change(function () {
 });
 
 </script>
-
 <!-- End of each chart section with BACK TO TOP link -->
 <div class="medium-24 column top">
 	<a class="float-right" href="#top"><i class="fa fa-arrow-up"></i> <span class="to-top">back to top</span></a>

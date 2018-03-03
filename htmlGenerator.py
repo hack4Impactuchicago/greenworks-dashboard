@@ -4,34 +4,39 @@ import parse as parser
 import csvToDictionary as reader
 from flask import Flask, request, render_template, redirect, url_for
 from werkzeug.utils import secure_filename
+from wtforms import Form, BooleanField, StringField, PasswordField, validators
 
 app = Flask(__name__)
 
 #def dictToHtml(opts):
 #    return render_template(.., data=json.dumps(opts))
 
-@app.route('/', methods = ['GET'])
+@app.route('/',  methods = ['GET','POST'])
 def landing():
-    return render_template("default.html");
+    if request.method == "POST":
+        return redirect(url_for('uploaded_file'))
+    else:
+        return render_template("default.html")
+
+##for now just submitting data via postman, need to edit later to render edits]
+@app.route('/uploaded_file',  methods = ['POST'])
+def upload():
+    if request.Form.validateInputs == False:
+        return render_template("default.html")
+    if 'csv' not in request.files:
+        print('No file part')
+        return redirect(request.url)
+    file = request.files['csv']
+    if file.filename == '':
+        print('No selected file')
+        return redirect(request.url)
+    if file:
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(app.config['~/layagollapudi/Desktop'], filename))
+        print(filename)
 
 
-##for now just submitting data via postman, need to edit later to render edits
-@app.route('/', methods = ['POST'])
-def upload_file():
-    if request.method == 'POST':
-        if 'csv' not in request.files:
-            print('No file part')
-            return redirect(request.url)
-        file = request.files['csv']
-        if file.filename == '':
-            print('No selected file')
-            return redirect(request.url)
-        if file:
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['~/layagollapudi/Desktop'], filename))
-            print(filename)
-            return redirect(url_for('uploaded_file',filename=filename))
-    return render_template("default.html")
+
 
 #@app.route('/')
 #def view():
