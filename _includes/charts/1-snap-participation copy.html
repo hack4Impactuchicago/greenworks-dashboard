@@ -1,0 +1,48 @@
+<canvas width="600" height="400">
+  <script>
+  (function () {
+    // Pass data from Jekyll/liquid to JavaScript
+    var rows = {{ site.data.snap_participation | jsonify }} // replace "snap_participation" w variable name
+
+    var opts = {
+      type: 'bar',// automate this later!
+      data: {
+        labels: pluck(rows, 'Year'),
+        datasets: [ // will be replaced
+          {
+            label: 'SNAP',
+            data: pluck(rows, 'SNAP'),
+            backgroundColor: 'rgba(168, 191, 18, 0.7)',
+            borderColor: 'rgba(168, 191, 18, 1)',
+            borderWidth: 0
+          },
+          {
+            label: 'Philly Food Bucks',
+            data: pluck(rows, 'Philly Food Bucks'),
+            backgroundColor: 'rgba(150, 201, 255, 0.7)',
+            borderColor: 'rgba(150, 201, 255, 1)',
+						borderWidth: 0
+          }
+        ]
+			},
+	  	options: {
+        scales: {
+          xAxes: [{
+              stacked: true
+          }],
+          yAxes: [{
+              stacked: true,
+          }]
+				},
+				title: {
+						display: true,
+						text: 'SNAP Participation at Markets', //pull this from file
+						position: 'top'
+        }
+      }
+    }
+
+    new Chart(getScriptParent(), opts)
+  })()
+  </script>
+</canvas>

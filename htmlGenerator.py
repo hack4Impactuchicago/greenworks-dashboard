@@ -8,8 +8,8 @@ from wtforms import Form, BooleanField, StringField, PasswordField, validators
 
 app = Flask(__name__)
 
-#def dictToHtml(opts):
-#    return render_template(.., data=json.dumps(opts))
+def dictToHtml(opts):
+  return render_template('chartTemplate.html', data=json.dumps(opts))
 
 @app.route('/',  methods = ['GET','POST'])
 def landing():
@@ -38,11 +38,11 @@ def upload():
 
 
 
-#@app.route('/')
-#def view():
-    #fileName = '_low_carbon_commute.csv'
-    #data = reader.csvToDict(fileName)
-    #return dictToHtml(data)
+@app.route('/html')
+def view():
+    fileName = 'static/_data/_low_carbon_commute.csv'
+    data = reader.csvToDict(fileName)
+    return dictToHtml(data)
 
 
 # FLASK_APP=htmlGenerator.py flask run
