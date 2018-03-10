@@ -1,32 +1,4 @@
-<script>
-// TODO This can be moved to its own file and included with scripts.html
 
-// Chart Globals ===============================================================
-Chart.defaults.global.defaultFontFamily = "'Open Sans', 'Helvetica', sans-serif";
-Chart.defaults.global.title.fontFamily = "'Montserrat', 'Helvetica', sans-serif";
-Chart.defaults.global.title.fontColor = 'rgb(68, 68, 68)';
-Chart.defaults.global.legend.position = 'bottom';
-Chart.defaults.global.legend.padding = 15;
-
-// Format numbers with commas in charts ========================================
-Chart.scaleService.updateScaleDefaults('linear', {
-	ticks: {
-		callback: function (value) {
-			if (value >= 1000000)
-				return value / 1000000 + 'm';
-			else if (value <= 999999 && value > 9999)
-				return value / 1000 + 'k';
-			else
-			return (+value).toLocaleString();
-		}
-	}
-})
-// Format numbers with commas in tooltips ======================================
-Chart.defaults.global.tooltips.callbacks.label = function (tooltipItem, data) {
-	var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
-	return datasetLabel + ': ' + (+tooltipItem.yLabel).toLocaleString();
-}
-</script>
 
 <div class= "row">
   <div class="medium-16 column">
@@ -67,22 +39,38 @@ Chart.defaults.global.tooltips.callbacks.label = function (tooltipItem, data) {
     <div class="form-container">
         <h2 class="formHeader">Greenworks Dashboard: Upload Data</h2>
 				<h4 class="formHeader">**Note: Upload permitted for specific individuals only!</h4>
-          <form id="CSVForm" action="/" method="post" class="inner-form-container">
+          <form id="CSVForm" action={{ url_for('upload') }} method="post" class="inner-form-container" enctype = "multipart/form-data">
 							<div class="input-div formItems">
 								<input type="file" name="Upload" id="fileUpload" accept=".csv" class="inputfile inputfile-1"/>
 								<label for="fileUpload"><span>Choose a CSV file!</span></label>
 							</div>
+							<div class="graphtypes formItems">
+									<label for="graph_type" class="graph_type">Graph Type</label>
+									<select name="graphtypes_">
+  									<option value="bar">Bar Graph</option>
+  									<option value="line">Line Graph</option>
+										<option value="scatter">Scatter Plot</option>
+									</select>
+              </div>
+							<div class="graphtypes formItems">
+									<label for="vision">Vision Title</label>
+                  <input type="text" id="vision" name="vision" />
+              </div>
               <div class="graphtypes formItems">
 									<label for="title">Title</label>
-                  <input type="text" id="title" name="subject" />
+                  <input type="text" id="title" name="title" />
               </div>
               <div class="graphtypes formItems">
 									<label>Axis Titles</label>
 									<div class="atitles">
-										<span class="alines">X:</span><input type="text" id="axis-title-1" class="axisTitle" name="subject-x" /><label for="axis-title-1"></label><br/>
-                  	<span class="alines">Y:</span><input type="text" id="axis-title-2" class="axisTitle" name="subject-y" /><label for="axis-title-2"></label><br/>
+										<span class="alines">Dependent:</span><input type="text" id="axis-title-1" class="axisTitle" name="title-x" /><label for="axis-title-1"></label><br/>
+                  	<span class="alines">Independent:</span><input type="text" id="axis-title-2" class="axisTitle" name="title-y" /><label for="axis-title-2"></label><br/>
 									</div>
 							</div>
+							<div class="graphtypes formItems">
+              		<label for="purpose">Purpose Statement</label>
+                  <textarea id="purpose" name="purpose" style="height:100px"></textarea>
+              </div>
 							<div class="graphtypes formItems">
               		<label for="description">Description</label>
                   <textarea id="description" name="subject" style="height:200px"></textarea>
@@ -90,36 +78,36 @@ Chart.defaults.global.tooltips.callbacks.label = function (tooltipItem, data) {
 						<div class="formItems">
 	            <h3 class="titlesColorChoosers">Background and Border Color</h3>
 							<div class="graphtypes-2">
-								<input type="checkbox" id="DefaultBBC" name="colorpickerb"/>
+								<input type="checkbox" id="DefaultBBC" name="BBCcheck"/>
 								<label for="DefaultBBC"  class="default dbbc">iff  check if you want default colors set.</label>
 							</div>
 							<section class="radioBBcwrap">
 								<div>
-								  <input type="radio" id="control_01" name="select" value="" class="menuoptBBC">
+								  <input type="radio" id="control_01" name="selectBBC" value="1" class="menuoptBBC">
 								  <label for="control_01" class="radioBBC bbv1">
 								    <p>1</p>
 								  </label>
 								</div>
 								<div>
-								  <input type="radio" id="control_02" name="select" value="" class="menuoptBBC">
+								  <input type="radio" id="control_02" name="selectBBC" value="2" class="menuoptBBC">
 								  <label for="control_02" class="radioBBC bbv2">
 								    <p>2</p>
 								  </label>
 								</div>
 								<div>
-								  <input type="radio" id="control_03" name="select" value="" class="menuoptBBC">
+								  <input type="radio" id="control_03" name="selectBBC" value="3" class="menuoptBBC">
 								  <label for="control_03" class="radioBBC bbv3">
 								    <p>3</p>
 								  </label>
 								</div>
 								<div>
-								  <input type="radio" id="control_04" name="select" value="" class="menuoptBBC">
+								  <input type="radio" id="control_04" name="selectBBC" value="4" class="menuoptBBC">
 								  <label for="control_04" class="radioBBC bbv4">
 								    <p>4</p>
 								  </label>
 								</div>
 								<div>
-								  <input type="radio" id="control_05" name="select" value="" class="menuoptBBC">
+								  <input type="radio" id="control_05" name="selectBBC" value="5" class="menuoptBBC">
 								  <label for="control_05" class="radioBBC bbv5">
 								    <p>5</p>
 								  </label>
@@ -129,7 +117,7 @@ Chart.defaults.global.tooltips.callbacks.label = function (tooltipItem, data) {
 						<div class="formItems">
 	            <h3 class="titlesColorChoosers">Background and Border Color</h3>
 							<div class="graphtypes-2">
-								<input type="checkbox" id="DefaultR" name="colorpickerb" />
+								<input type="checkbox" id="DefaultR" name="Radiocheck" />
 								<label for="DefaultR" class="default dr" >iff  check if you want default colors set.</label>
 							</div>
 							<section class="radioColorThemeswrap">
@@ -175,14 +163,28 @@ Chart.defaults.global.tooltips.callbacks.label = function (tooltipItem, data) {
 								</div>
 							</section>
 					</div>
-						<div class="input-div">
-							<input type="submit" name='Submit' value="Submit" onsubmit="return validateInputs()">
-						</div>
+					<div class="graphtypes formItems">
+							<label for="source">Source</label>
+							<input type="text" id="source" name="source" />
+					</div>
+					<div class="input-div">
+						<input type="submit" name='Submit' value="Submit">
+					</div>
         </form>
     </div>
   </div>
 </div>
 
+{% for result in results %}
+	{{ result }}
+{% endfor %}
+
+<script>
+$('.inputfile').change(function(e) {
+			var $this = $(this);
+			$this.next().html($this.val().split('\\').pop());
+		});
+</script>
 
 <script>
 // Get the modal
@@ -266,6 +268,42 @@ $('#DefaultBBC').change(function () {
 
 </script>
 <!-- End of each chart section with BACK TO TOP link -->
-<div class="medium-24 column top">
-	<a class="float-right" href="#top"><i class="fa fa-arrow-up"></i> <span class="to-top">back to top</span></a>
+<div class="scroll-to-top d-lg-none position-fixed ">
+      <a class="js-scroll-trigger d-block text-center text-white rounded" href="#top">
+        <i class="fa fa-arrow-up"></i> <span class="to-top">back to top</span>
+      </a>
 </div>
+
+<script>
+(function($) {
+  "use strict"; // Start of use strict
+
+  // Smooth scrolling using jQuery easing
+  $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function() {
+    if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
+      var target = $(this.hash);
+      target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+      if (target.length) {
+        $('html, body').animate({
+          scrollTop: (target.offset().top - 70)
+        }, 1000, "easeInOutExpo");
+        return false;
+      }
+    }
+  });
+
+  // Scroll to top button appear
+  $(document).scroll(function() {
+    var scrollDistance = $(this).scrollTop();
+    if (scrollDistance > 100) {
+      $('.scroll-to-top').fadeIn();
+    } else {
+      $('.scroll-to-top').fadeOut();
+    }
+  });
+
+  // Closes responsive menu when a scroll trigger link is clicked
+  $('.js-scroll-trigger').click(function() {
+    $('.navbar-collapse').collapse('hide');
+  });
+</script>
