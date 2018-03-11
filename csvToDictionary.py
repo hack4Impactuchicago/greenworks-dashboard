@@ -40,7 +40,7 @@ def TextColorChoices(colors):
         return "Invalid choice number."
 
 def csvToDict(csvfile,dict_of_otherinfo,p):
-    print("T1")
+    #print("T1")
     #Checking to see if graphtype given
     if 'graphtypes_' in dict_of_otherinfo:
         gt = dict_of_otherinfo['graphtypes_']
@@ -67,7 +67,7 @@ def csvToDict(csvfile,dict_of_otherinfo,p):
 
     ##nowww opening the file
     csvname = os.path.join(p, csvfile.filename)
-    print("T2")
+    print("csvname")
     with open(csvname, mode='r') as infile:
         #Reading the CSV file
         reader = csv.reader(infile)

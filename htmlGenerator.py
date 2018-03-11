@@ -11,7 +11,7 @@ from wtforms.validators import Required
 app = Flask(__name__)
 
 ##Definitions
-path_directory = 'static\_data'
+path_directory = os.path.join('static','_data')
 UPLOAD_FOLDER = os.path.normpath(path_directory);
 print(UPLOAD_FOLDER)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
@@ -35,7 +35,7 @@ def dictToHtml(opts, description, purpose, source, vision):
 def landing():
         return render_template("default.html", results = printable_list)
 
-@app.route('/upload',  methods = ['POST'])
+@app.route('/',  methods = ['POST'])
 def upload():
     if request.method == "POST":
         file = request.files['Upload']
@@ -44,7 +44,7 @@ def upload():
         if file.filename == '':
              flash('No selected file')
         if file:
-             path = os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(file.filename))
+             path = os.path.normpath(os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(file.filename)))
              file.save(path)
              data = reader.csvToDict(file,request.form,app.config['UPLOAD_FOLDER'])
              #now working with the actual template rendering
