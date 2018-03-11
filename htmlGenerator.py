@@ -44,7 +44,8 @@ def upload():
         if file.filename == '':
              flash('No selected file')
         if file:
-             path = os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(file.filename))
+             file.filename = secure_filename(file.filename)
+             path = os.path.normpath(os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(file.filename)))
              file.save(path)
              data = reader.csvToDict(file,request.form,app.config['UPLOAD_FOLDER'])
              #now working with the actual template rendering

@@ -1,42 +1,29 @@
-<!DOCTYPE html>
 {% macro chart(data, src = 'text', vision = 'text', desc = 'text', purp = 'text') -%}
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <script src='scripts/Chart.bundle.min.js'></script>
-        <script src='scripts/util.js'></script>
-    </head>
-    <body>
-
-
-      <script>
-        Chart.defaults.global.title.fontColor = 'rgb(68, 68, 68)';
-      </script>
-
-      <h2 class="contrast" id="vision-4">
-        {{vs}}
-	    </h2>
-      <div>
-        <canvas id="chart" width="600" height="400">
-
+<h2 class="pt1 contrast" id = "vision-1">
+      {{vision}}
+</h2>
+<div class="row pbxl ptl">
+  <div class="medium-16 column prxl">
+      <canvas id = "chart" width="600" height="400">
           <script>
             opts = {{data | safe}}
             console.log(opts)
             var mychart = document.getElementById("chart");
             new Chart(mychart, opts);
           </script>
-
-        </canvas>
-      </div>
-        <div class="medium-8 column end">
-            <aside class="related pll-mu">
-                <h3 class="h4 pbl">{{purp}}</h3>
-                <p>{{desc}}</p>
-                <p>Source: {{src}}</p>
-            </aside>
-          </div>
-      <div>
-
-  </body>
-</html>
+      </canvas>
+  </div>
+  <div class="medium-8 column end">
+      <aside class="related pll-mu">
+          <h3 class="h4 pbl">{{purp}}</h3>
+          <p>{{desc}}</p>
+          <p>Source: {{src}}</p>
+      </aside>
+  </div>
+  <div class="medium-24 column top">
+    <a class="float-right" href="#top">
+      <i class="fa fa-arrow-up"></i>
+      <span class="to-top">back to top</span>
+    </a>
+  </div>
 {%- endmacro %}
