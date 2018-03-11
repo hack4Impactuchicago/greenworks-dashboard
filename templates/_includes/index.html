@@ -1,4 +1,4 @@
-
+{% import 'chartTemplate.html' as charts %}
 
 <div class= "row">
   <div class="medium-16 column">
@@ -176,7 +176,7 @@
 </div>
 
 {% for result in results %}
-	{{ result }}
+	{{ charts.chart(result[0], src = result[1], vision = result[2], desc = result[3], purp = result[4])}}
 {% endfor %}
 
 <script>

@@ -40,6 +40,7 @@ def TextColorChoices(colors):
         return "Invalid choice number."
 
 def csvToDict(csvfile,dict_of_otherinfo,p):
+    print("T1")
     #Checking to see if graphtype given
     if 'graphtypes_' in dict_of_otherinfo:
         gt = dict_of_otherinfo['graphtypes_']
@@ -66,6 +67,7 @@ def csvToDict(csvfile,dict_of_otherinfo,p):
 
     ##nowww opening the file
     csvname = os.path.join(p, csvfile.filename)
+    print("T2")
     with open(csvname, mode='r') as infile:
         #Reading the CSV file
         reader = csv.reader(infile)
@@ -76,52 +78,55 @@ def csvToDict(csvfile,dict_of_otherinfo,p):
             data.append(
               {'label':c[0],
                 'data':c[1:],
-                'backgroundColor': GraphColorChoices(colorN,counter),
-                'borderColor': GraphColorChoices(colorN,counter),
+#                'backgroundColor': GraphColorChoices(colorN,counter),
+#                'borderColor': GraphColorChoices(colorN,counter),
                 'borderWidth':0})
             counter+=1
-
+    print("T3")
     #and finally creating the data for chart.js
-    if gt == 'bar':
-        opts={
+#    if gt == 'bar':
+    opts = {
           'type':gt,
-          'data':
-          {
-            'labels': data[0]['data'],
-            'datasets': data[1:]
-          },
-          'options':
-          {
-            'scales':
-            {
-              'yAxes':
-              [{
-                'stacked': True,
-                'scaleLabel': {
-                  'display': True,
-                  'labelString': dict_of_otherinfo['title-x']
-                  #'fontColor': TextColorChoices(colorN)
-                }
-              }],
-              'xAxes':
-              [{
-                'stacked': True
-                #'display': True,
-                #'labelString': dict_of_otherinfo['title-y']
-                #'fontColor': TextColorChoices(colorN)
-              }]
-            },
-            'title':
-            {
-              'display':True,
-              'text':tt,
-              'position':'top'
+      'data':
+      {
+        'labels': data[0]['data'],
+        'datasets': data[1:]
+      },
+      'options':
+      {
+        'scales':
+        {
+          'yAxes':
+          [{
+            'stacked': True,
+            'scaleLabel': {
+              'display': True,
+              'labelString': dict_of_otherinfo['title-x']
               #'fontColor': TextColorChoices(colorN)
             }
+          }],
+          'xAxes':
+          [{
+            'stacked': True,
+            'scaleLabel' : {
+                'display': True,
+                'labelString': dict_of_otherinfo['title-y']
+            }
+            #'fontColor': TextColorChoices(colorN)
+          }]
+        },
+        'title':
+        {
+          'display':True,
+#              'text':tt,
+          'position':'top'
+          #'fontColor': TextColorChoices(colorN)
         }
-        }
-    else:
-        opts = {}
+    }
+    }
+    print("T4")
+#    else:
+#        opts = {}
 
 
     return opts

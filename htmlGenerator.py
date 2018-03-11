@@ -11,8 +11,9 @@ from wtforms.validators import Required
 app = Flask(__name__)
 
 ##Definitions
-APP_ROOT = os.path.dirname(os.path.abspath('__file__'))
-UPLOAD_FOLDER = os.path.join(APP_ROOT, '/static/_data')
+path_directory = 'static\_data'
+UPLOAD_FOLDER = os.path.normpath(path_directory);
+print(UPLOAD_FOLDER)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 printable_list = []
@@ -32,7 +33,7 @@ def dictToHtml(opts, description, purpose, source, vision):
 ##ROUTING
 @app.route('/',  methods = ['GET'])
 def landing():
-        return render_template("default.html")
+        return render_template("default.html", results = printable_list)
 
 @app.route('/upload',  methods = ['POST'])
 def upload():
@@ -43,15 +44,12 @@ def upload():
         if file.filename == '':
              flash('No selected file')
         if file:
-             file.save(os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(file.filename)))
+             path = os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(file.filename))
+             file.save(path)
              data = reader.csvToDict(file,request.form,app.config['UPLOAD_FOLDER'])
              #now working with the actual template rendering
-             file = render_template('chartTemplate.html', data=json.dumps(data), src=request.form['source'], vs=request.form['vision'], desc=request.form['description'], purp=request.form['purpose'])
-             filename = secure_filename(file.filename)
-             file.save(os.path.join(app.config[UPLOAD_FOLDER], filename))
-             ##looping through filenames
-             #for f in os.listdir(path):
-             #  printable_list.append(f)
+             values = [json.dumps(data), request.form['source'], request.form['vision'], request.form['subject'], request.form['purpose']]
+             printable_list.append(values)
     return render_template("default.html", results=printable_list)
 
 
