@@ -15,7 +15,7 @@ path_directory = 'static\_data'
 UPLOAD_FOLDER = os.path.normpath(path_directory);
 print(UPLOAD_FOLDER)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
+count = 1
 printable_list = []
 ALLOWED_EXTENSIONS = set(['csv'])
 
@@ -44,13 +44,17 @@ def upload():
         if file.filename == '':
              flash('No selected file')
         if file:
+             global count
              file.filename = secure_filename(file.filename)
              path = os.path.normpath(os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(file.filename)))
              file.save(path)
              data = reader.csvToDict(file,request.form,app.config['UPLOAD_FOLDER'])
              #now working with the actual template rendering
-             values = [json.dumps(data), request.form['source'], request.form['vision'], request.form['subject'], request.form['purpose']]
+             myString = "myChart" + str(count)
+             print(myString)
+             values = [json.dumps(data), request.form['source'], request.form['vision'], request.form['subject'], request.form['purpose'], myString]
              printable_list.append(values)
+             count += 1
     return render_template("default.html", results=printable_list)
 
 

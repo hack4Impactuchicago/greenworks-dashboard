@@ -1,14 +1,14 @@
-{% macro chart(data, src = 'text', vision = 'text', desc = 'text', purp = 'text') -%}
-<h2 class="pt1 contrast" id = "vision-1">
+{% macro chart(data, src = 'text', vision = 'text', desc = 'text', purp = 'text', title = "text") -%}
+<h2 class="pt1 contrast">
       {{vision}}
 </h2>
 <div class="row pbxl ptl">
   <div class="medium-16 column prxl">
-      <canvas id = "chart" width="600" height="400">
+      <canvas id = {{ title }} width="600" height="400">
           <script>
             opts = {{data | safe}}
             console.log(opts)
-            var mychart = document.getElementById("chart");
+            var mychart = document.getElementById("{{ title }}");
             new Chart(mychart, opts);
           </script>
       </canvas>
@@ -26,4 +26,5 @@
       <span class="to-top">back to top</span>
     </a>
   </div>
+</div>
 {%- endmacro %}
