@@ -121,9 +121,6 @@ def csvToDict(csvfile,dict_of_otherinfo,p):
         }
     }
     }
-#    else:
-#        opts = {}
-
 
     return opts
     #print(opts)

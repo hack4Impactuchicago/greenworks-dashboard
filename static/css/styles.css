@@ -87,6 +87,34 @@ h6:hover .header-link {
 }
 /*form content*/
 
+.modal2 {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(255,255,255); /* Fallback color */
+    background-color: rgba(255,255,255,0.4); /* White w/ opacity */
+}
+
+.modal-content2 {
+    position: center;
+    border-radius: 5px;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 5%;
+    border: 8px solid #2176d2;
+    width: 80%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s
+}
+
 .formItems{
   margin-top: 20px;
   margin-bottom: 20px;
@@ -439,5 +467,79 @@ input[type=text].invalid, textarea.invalid{
     cursor: pointer;
 }
 
+.close2 {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
 
-/*For all color choosers*/
+.close2:hover,
+.close2:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+/*LOGIN*/
+
+/*form.login {
+background-color: #FFF;
+padding: 20px;
+border-radius: 5px
+}
+
+.login-title {
+text-align: center;
+color: #777;
+}
+
+.login-form {
+text-align: center;
+}
+.control-group {
+margin-bottom: 10px;
+}
+
+input {
+text-align: center;
+background-color: #ECF0F1;
+border: 2px solid transparent;
+border-radius: 3px;
+font-size: 16px;
+font-weight: 200;
+padding: 10px 0;
+width: 250px;
+transition: border .5s;
+}
+
+input:focus {
+border: 2px solid #3498DB;
+box-shadow: none;
+}
+
+.btn {
+  border: 2px solid transparent;
+  background: #3498DB;
+  color: #ffffff;
+  font-size: 16px;
+  line-height: 25px;
+  padding: 10px 0;
+  text-decoration: none;
+  text-shadow: none;
+  border-radius: 3px;
+  box-shadow: none;
+  transition: 0.25s;
+  display: block;
+  width: 250px;
+  margin: 0 auto;
+}
+
+.btn:hover {
+  background-color: #2980B9;
+}
+
+*/
+
+/*rendering styles*/

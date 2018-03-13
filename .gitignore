@@ -3,3 +3,4 @@ _site
 *.pyc
 icons/icons.ai
 __pycache__
+venv
