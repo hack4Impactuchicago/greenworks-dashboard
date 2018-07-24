@@ -86,19 +86,15 @@ def allowed_file(filename):
    # if result:
    #     session['logged_in'] = True
    # return landing()
-#
-# @app.route("/logout")
-# def logout():
-#     session['logged_in'] = False
-#     return home()
+
+@app.route("/logout")
+def logout():
+    session['logged_in'] = False
+    return redirect('/')
 
 ##MAIN ROUTING
 @app.route('/', methods = ['GET'])
 def landing():
-    
-    #This is how to check authentification.
-    #if 'access_token' in session:
-     #   return 'Never trust strangers', 404    
     return render_template("default.html", results = printable_list)
 
 @app.route('/', methods = ['POST'])
@@ -136,12 +132,9 @@ def callback():
         headers = {'Accept': 'application/json'}
         r = requests.post(url, params=payload, headers=headers)
         response = r.json()
-        # get access_token from response and store in session
         if 'access_token' in response:
             session['access_token'] = response['access_token']
-        else:
-            app.logger.error('github didn\'t return an access token, oh dear')
-        # send authenticated user where they're supposed to go
+            session['logged_in'] = True
         return redirect('/')
     return '', 404
 
