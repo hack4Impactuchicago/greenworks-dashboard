@@ -1,5 +1,6 @@
 import json
 import os
+import requests
 import tempfile
 import csvToDictionary as reader
 from flask import Flask, request, render_template, redirect, url_for, g, session
@@ -73,18 +74,18 @@ def allowed_file(filename):
     return '.' in filename and \
         filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
-# @app.route('/login', methods=['POST'])
-# def do_admin_login():
-#     redirect(url_for('landing') + '#myModal2')
-#     POST_USERNAME = str(request.form['username'])
-#     POST_PASSWORD = str(request.form['password'])
-#     Session = sessionmaker(bind=engine)
-#     s = Session()
-#     query = s.query(User).filter(User.username.in_([POST_USERNAME]), User.password.in_([POST_PASSWORD]) )
-#     result = query.first()
-#     if result:
-#         session['logged_in'] = True
-#     return landing()
+#@app.route('/login', methods=['GET'])
+#def do_admin_login():
+ #   redirect(url_for('landing') + '#myModal2')
+  #  POST_USERNAME = str(request.form['username'])
+   # POST_PASSWORD = str(request.form['password'])
+   # Session = sessionmaker(bind=engine)
+   # s = Session()
+   # query = s.query(User).filter(User.username.in_([POST_USERNAME]), User.password.in_([POST_PASSWORD]) )
+   # result = query.first()
+   # if result:
+   #     session['logged_in'] = True
+   # return landing()
 #
 # @app.route("/logout")
 # def logout():
@@ -94,7 +95,11 @@ def allowed_file(filename):
 ##MAIN ROUTING
 @app.route('/', methods = ['GET'])
 def landing():
-        return render_template("default.html", results = printable_list)
+    
+    #This is how to check authentification.
+    #if 'access_token' in session:
+     #   return 'Never trust strangers', 404    
+    return render_template("default.html", results = printable_list)
 
 @app.route('/', methods = ['POST'])
 #@login_required
@@ -119,6 +124,28 @@ def upload():
         count += 1
         return render_template("default.html", results=printable_list)
 
+@app.route('/callback')
+def callback():
+    if 'code' in request.args:
+        url = 'https://github.com/login/oauth/access_token'
+        payload = {
+            'client_id': '535c9a645fbc1e48c632',#Make environment upon real implementation
+            'client_secret': 'd47c57f8562ef2f1a11b3d57ccfe7dc7bd4f58e3',
+            'code': request.args['code']
+        }
+        headers = {'Accept': 'application/json'}
+        r = requests.post(url, params=payload, headers=headers)
+        response = r.json()
+        # get access_token from response and store in session
+        if 'access_token' in response:
+            session['access_token'] = response['access_token']
+        else:
+            app.logger.error('github didn\'t return an access token, oh dear')
+        # send authenticated user where they're supposed to go
+        return redirect('/')
+    return '', 404
+
+
 
 #@app.route('/html')
 #def view():
@@ -133,6 +160,7 @@ def upload():
 
 if __name__ == "__main__":
     #init_db()
+    app.secret_key = 'd47c57f8562ef2f1a11b3d57ccfe7dc7bd4f58e3'
     app.jinja_env.auto_reload = True
     app.config['TEMPLATES_AUTO_RELOAD'] = True
     app.run(debug=True)
