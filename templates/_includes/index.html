@@ -30,12 +30,40 @@
           Upload Data
           <i class="fa fa-cloud-upload"></i>
       </a>
+      <a id="popupbutton2" class="button icon">
+          Edit Charts
+          <i class="fa fa-edit"></i>
+      </a>
       {% endif %}
 	  </aside>
 	</div>
 </div>
 
 {% if session['authenticated'] == True %}
+
+<div id="EditPage" class="modal">
+  <div class="modal-content">
+    <span class="close2">&times;</span>
+    <div class="form-container">
+      <h2 class="formHeader">Greenworks Dashboard: Edit Charts</h2>
+      <h4 class="formHeader">Edit and Delete Charts Here</h4>
+      <form id="EditForm" action="{{ url_for('edit') }}" method="POST" class="inner-form-container" enctype="multipart/form-data">
+        {% set counter = 1 -%}
+        {% for result in results %}
+        <p>{{ result[2]}}</p>
+        <select name="{{result[2]}}">
+          {% for result in results %}
+          <option value="{{ counter + loop.index0 }}"> {{ counter + loop.index0 }}</option>
+          {% endfor %}
+          <option value="delete">Delete</option>
+        </select>
+        {% set counter = counter + group|length %}
+        {% endfor %}
+        <input type="submit" value="Submit">
+      </form>
+    </div>
+  </div>
+</div>
 
 <div id="myModal" class="modal">
   <div class="modal-content">
@@ -190,6 +218,28 @@ $('.inputfile').change(function(e) {
 			var $this = $(this);
 			$this.next().html($this.val().split('\\').pop());
 		});
+</script>
+
+<script>
+// Get the modal
+var modal2 = document.getElementById('EditPage');
+var btn2 = document.getElementById("popupbutton2");
+var span2 = document.getElementsByClassName("close2")[0];
+// When the user clicks the button, open the modal
+btn2.onclick = function() {
+    modal2.style.display = "block";
+}
+// When the user clicks on <span> (x), close the modal
+span2.onclick = function() {
+    modal2.style.display = "none";
+}
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal2) {
+        modal2.style.display = "none";
+    }
+}
+
 </script>
 
 <script>

@@ -78,7 +78,25 @@ def upload():
         values = [json.dumps(data), request.form['source'], request.form['vision'], request.form['subject'], request.form['purpose'], myString]
         printable_list.append(values)
         count += 1
-        return render_template("default.html", results=printable_list)
+        return redirect('/')
+
+@app.route('/editing', methods = ['POST'])
+def edit():
+    global printable_list
+    global count
+    numlist = []
+    dels = []
+    count2 = 0
+    for result in printable_list:
+        if request.form[result[2]] == "delete":
+            dels.append(result)
+        else:
+            numlist.append(int(request.form[result[2]]) - 1)
+        count2 += 1
+    for val in dels:
+        printable_list.remove(val)
+    printable_list = [ printable_list[i] for i in numlist ]
+    return redirect('/')
 
 @app.route('/callback')
 def callback():
@@ -94,7 +112,7 @@ def callback():
         response = r.json()
         if 'access_token' in response:
             session['access_token'] = response['access_token']
-            
+
             # This gets the github user's information
             access_token_url = 'https://api.github.com/user?access_token={}'
             r2 = requests.get(access_token_url.format(session['access_token']))
@@ -125,7 +143,7 @@ def callback():
                 session['authenticated'] = True
                 print('yes')
 
-            dbsession.close() 
+            dbsession.close()
             engine.dispose()
         return redirect('/')
     return '', 404
