@@ -2,6 +2,7 @@ import json
 import os
 import requests
 import tempfile
+import shelve
 import csvToDictionary as reader
 from flask import Flask, request, render_template, redirect, url_for, g, session
 from flask import render_template_string
@@ -35,8 +36,16 @@ path_directory = os.path.join('static','_data')
 UPLOAD_FOLDER = os.path.normpath(path_directory);
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-count = 1
 printable_list = []
+with shelve.open('shelve') as db:
+    flag = 'list' in db
+    if flag:
+        printable_list = db['list']
+    else:
+        printable_list = []
+        db['list'] = printable_list
+    db.close()
+count = len(printable_list) + 1
 ALLOWED_EXTENSIONS = set(['csv'])
 
 ##HELPERS
@@ -53,6 +62,9 @@ def logout():
 ##MAIN ROUTING
 @app.route('/', methods = ['GET'])
 def landing():
+    with shelve.open('shelve') as db:
+        printable_list = db['list']
+        db.close()
     if not 'logged_in' in session:
         session['logged_in'] = False
         session['authenticated'] = False
@@ -78,6 +90,10 @@ def upload():
         values = [json.dumps(data), request.form['source'], request.form['vision'], request.form['subject'], request.form['purpose'], myString]
         printable_list.append(values)
         count += 1
+        with shelve.open('shelve') as db:
+            del db['list']
+            db['list'] = printable_list
+            db.close()
         return redirect('/')
 
 @app.route('/editing', methods = ['POST'])
@@ -96,6 +112,10 @@ def edit():
     for val in dels:
         printable_list.remove(val)
     printable_list = [ printable_list[i] for i in numlist ]
+    with shelve.open('shelve') as db:
+        del db['list']
+        db['list'] = printable_list
+        db.close()
     return redirect('/')
 
 @app.route('/callback')
