@@ -1,5 +1,6 @@
 import json
 import os
+import requests
 import tempfile
 import csvToDictionary as reader
 from flask import Flask, request, render_template, redirect, url_for, g, session
@@ -20,37 +21,7 @@ from werkzeug.security import generate_password_hash, \
 import datetime
 from sqlalchemy.orm import sessionmaker
 
-# engine = create_engine('sqlite:///users.db', echo=True)
-# Base = declarative_base()
-#
-# ########################################################################
-# class User(Base):
-#     """"""
-#     __tablename__ = "users"
-#
-#     id = Column(Integer, primary_key=True)
-#     username = Column(String)
-#     password = Column(String)
-#
-#     #----------------------------------------------------------------------
-#     def __init__(self, username, password):
-#         """"""
-#         self.username = username
-#         self.set_password(password)
-#
-#     def set_password(self, password):
-#         self.pw_hash = generate_password_hash(password)
-#
-#     def check_password(self, password):
-#         return check_password_hash(self.pw_hash, password)
-# # create tables
-# Base.metadata.create_all(engine)
-#
-# ##########################################################################
-#
-# # create a Session
-# Session = sessionmaker(bind=engine)
-# session = Session()
+
 #
 # user = User("admin","password")
 # session.add(user)
@@ -73,31 +44,21 @@ def allowed_file(filename):
     return '.' in filename and \
         filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
-# @app.route('/login', methods=['POST'])
-# def do_admin_login():
-#     redirect(url_for('landing') + '#myModal2')
-#     POST_USERNAME = str(request.form['username'])
-#     POST_PASSWORD = str(request.form['password'])
-#     Session = sessionmaker(bind=engine)
-#     s = Session()
-#     query = s.query(User).filter(User.username.in_([POST_USERNAME]), User.password.in_([POST_PASSWORD]) )
-#     result = query.first()
-#     if result:
-#         session['logged_in'] = True
-#     return landing()
-#
-# @app.route("/logout")
-# def logout():
-#     session['logged_in'] = False
-#     return home()
+@app.route("/logout")
+def logout():
+    session['logged_in'] = False
+    session['authenticated'] = False
+    return redirect('/')
 
 ##MAIN ROUTING
 @app.route('/', methods = ['GET'])
 def landing():
-        return render_template("default.html", results = printable_list)
+    if not 'logged_in' in session:
+        session['logged_in'] = False
+        session['authenticated'] = False
+    return render_template("default.html", results = printable_list)
 
 @app.route('/', methods = ['POST'])
-#@login_required
 def upload():
     if request.method == "POST":
         file = request.files['Upload']
@@ -119,6 +80,57 @@ def upload():
         count += 1
         return render_template("default.html", results=printable_list)
 
+@app.route('/callback')
+def callback():
+    if 'code' in request.args:
+        url = 'https://github.com/login/oauth/access_token'
+        payload = {
+            'client_id': '535c9a645fbc1e48c632',#Make environment upon real implementation
+            'client_secret': 'd47c57f8562ef2f1a11b3d57ccfe7dc7bd4f58e3',
+            'code': request.args['code']
+        }
+        headers = {'Accept': 'application/json'}
+        r = requests.post(url, params=payload, headers=headers)
+        response = r.json()
+        if 'access_token' in response:
+            session['access_token'] = response['access_token']
+            
+            # This gets the github user's information
+            access_token_url = 'https://api.github.com/user?access_token={}'
+            r2 = requests.get(access_token_url.format(session['access_token']))
+            response2 = r2.json()
+            username = response2['login']
+            # This gets the github user's information
+
+            session['logged_in'] = True
+
+            # Now we check if this user is an approved user
+            engine = create_engine('sqlite:///users.db', echo=True)
+            Base = declarative_base()
+
+            class User(Base):
+                __tablename__ = "users"
+
+                id = Column(Integer, primary_key=True)
+                username = Column(String)
+
+            # # create tables
+            Base.metadata.create_all(engine)
+
+            # # create a Session
+            dbSession = sessionmaker(bind=engine)
+            dbsession = dbSession()
+
+            if dbsession.query(User).filter(User.username == username).first() is not None:
+                session['authenticated'] = True
+                print('yes')
+
+            dbsession.close() 
+            engine.dispose()
+        return redirect('/')
+    return '', 404
+
+
 
 #@app.route('/html')
 #def view():
@@ -133,6 +145,7 @@ def upload():
 
 if __name__ == "__main__":
     #init_db()
+    app.secret_key = 'd47c57f8562ef2f1a11b3d57ccfe7dc7bd4f58e3'
     app.jinja_env.auto_reload = True
     app.config['TEMPLATES_AUTO_RELOAD'] = True
     app.run(debug=True)

@@ -25,13 +25,17 @@
 	    <br>
 	    <a href="https://www.opendataphilly.org/dataset/greenworks-dashboard" class="button icon">Download Data<i class="fa fa-table"></i></a>
       <br>
+      {% if session['authenticated'] == True %}
       <a id="popupbutton" class="button icon">
           Upload Data
           <i class="fa fa-cloud-upload"></i>
       </a>
+      {% endif %}
 	  </aside>
 	</div>
 </div>
+
+{% if session['authenticated'] == True %}
 
 <div id="myModal" class="modal">
   <div class="modal-content">
@@ -174,6 +178,8 @@
     </div>
   </div>
 </div>
+
+{% endif %}
 
 {% for result in results %}
 	{{ charts.chart(result[0], src = result[1], vision = result[2], desc = result[3], purp = result[4], title = result[5])}}

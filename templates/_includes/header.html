@@ -21,6 +21,11 @@
 	          <ul class="breadcrumbs">
 	            <li><a href="https://beta.phila.gov">phila.gov</a></li>
 	            <li><a href="https://beta.phila.gov/departments/office-of-sustainability/">Office of Sustainability</a></li>
+		    {% if session['logged_in'] == False %}
+		    <li><a href="https://github.com/login/oauth/authorize?client_id=535c9a645fbc1e48c632&scope=(no scope)">Login</a></li>
+		    {% else %}
+		    <li><a href="/logout">Logout</a></li>
+		    {% endif %}
 	            <li>Greenworks Dashboard</li>
 	          </ul>
 	        </nav>
