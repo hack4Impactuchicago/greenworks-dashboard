@@ -21,37 +21,7 @@ from werkzeug.security import generate_password_hash, \
 import datetime
 from sqlalchemy.orm import sessionmaker
 
-# engine = create_engine('sqlite:///users.db', echo=True)
-# Base = declarative_base()
-#
-# ########################################################################
-# class User(Base):
-#     """"""
-#     __tablename__ = "users"
-#
-#     id = Column(Integer, primary_key=True)
-#     username = Column(String)
-#     password = Column(String)
-#
-#     #----------------------------------------------------------------------
-#     def __init__(self, username, password):
-#         """"""
-#         self.username = username
-#         self.set_password(password)
-#
-#     def set_password(self, password):
-#         self.pw_hash = generate_password_hash(password)
-#
-#     def check_password(self, password):
-#         return check_password_hash(self.pw_hash, password)
-# # create tables
-# Base.metadata.create_all(engine)
-#
-# ##########################################################################
-#
-# # create a Session
-# Session = sessionmaker(bind=engine)
-# session = Session()
+
 #
 # user = User("admin","password")
 # session.add(user)
@@ -74,31 +44,21 @@ def allowed_file(filename):
     return '.' in filename and \
         filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
-#@app.route('/login', methods=['GET'])
-#def do_admin_login():
- #   redirect(url_for('landing') + '#myModal2')
-  #  POST_USERNAME = str(request.form['username'])
-   # POST_PASSWORD = str(request.form['password'])
-   # Session = sessionmaker(bind=engine)
-   # s = Session()
-   # query = s.query(User).filter(User.username.in_([POST_USERNAME]), User.password.in_([POST_PASSWORD]) )
-   # result = query.first()
-   # if result:
-   #     session['logged_in'] = True
-   # return landing()
-
 @app.route("/logout")
 def logout():
     session['logged_in'] = False
+    session['authenticated'] = False
     return redirect('/')
 
 ##MAIN ROUTING
 @app.route('/', methods = ['GET'])
 def landing():
+    if not 'logged_in' in session:
+        session['logged_in'] = False
+        session['authenticated'] = False
     return render_template("default.html", results = printable_list)
 
 @app.route('/', methods = ['POST'])
-#@login_required
 def upload():
     if request.method == "POST":
         file = request.files['Upload']
@@ -134,7 +94,39 @@ def callback():
         response = r.json()
         if 'access_token' in response:
             session['access_token'] = response['access_token']
+            
+            # This gets the github user's information
+            access_token_url = 'https://api.github.com/user?access_token={}'
+            r2 = requests.get(access_token_url.format(session['access_token']))
+            response2 = r2.json()
+            username = response2['login']
+            # This gets the github user's information
+
             session['logged_in'] = True
+
+            # Now we check if this user is an approved user
+            engine = create_engine('sqlite:///users.db', echo=True)
+            Base = declarative_base()
+
+            class User(Base):
+                __tablename__ = "users"
+
+                id = Column(Integer, primary_key=True)
+                username = Column(String)
+
+            # # create tables
+            Base.metadata.create_all(engine)
+
+            # # create a Session
+            dbSession = sessionmaker(bind=engine)
+            dbsession = dbSession()
+
+            if dbsession.query(User).filter(User.username == username).first() is not None:
+                session['authenticated'] = True
+                print('yes')
+
+            dbsession.close() 
+            engine.dispose()
         return redirect('/')
     return '', 404
 
