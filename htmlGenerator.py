@@ -123,8 +123,8 @@ def callback():
     if 'code' in request.args:
         url = 'https://github.com/login/oauth/access_token'
         payload = {
-            'client_id': '535c9a645fbc1e48c632',#Make environment upon real implementation
-            'client_secret': 'd47c57f8562ef2f1a11b3d57ccfe7dc7bd4f58e3',
+            'client_id': '74db254106d90e8610cb',#Make environment upon real implementation
+            'client_secret': 'e99fc11a7901fbaa706b01ca1688569dbbc74412',
             'code': request.args['code']
         }
         headers = {'Accept': 'application/json'}
