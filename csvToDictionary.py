@@ -118,6 +118,10 @@ def csvToDict(csvfile,dict_of_otherinfo,p):
               'display': True,
               'labelString': dict_of_otherinfo['title-x'],
               'fontColor': TextColorChoices(colorN)
+              },
+            'ticks': {
+              'min': dict_of_otherinfo['y-min'],
+              'max': dict_of_otherinfo['y-max'],
             }
           }],
           'xAxes':
