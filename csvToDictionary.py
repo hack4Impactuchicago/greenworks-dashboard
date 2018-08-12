@@ -2,11 +2,11 @@ import csv
 import os
 #import parse as parser
 
-colorOpts1 = ['rgba(63, 131, 171, 0.8)','rgba(134, 195, 180, 0.8)','rgba(200, 220, 195, 0.8)','rgba(134, 209, 209, 0.8)','rgba(244, 227, 209, 0.8)']
-colorOpts2 = ['#A020F0','#FF8833','#FFEB00','#3AA655','#02A4D3']
-colorOpts3 = ['#4E3A5E','#56887D','#7A89B8','#9E5E6F','#8BA8B7']
-colorOpts4 = ['#FF9933','#FD5B78','#FFFF66','#CCFF00','#AAF0D1']
-colorOptsDefault = ['rgba(255, 239, 162, .8)', 'rgba(254, 208, 208, .8)','rgba(185, 242, 177, .8)','rgba(218, 237, 254, .8)','rgba(150, 201, 255, .8)']
+colorOpts1 = ['rgba(63, 131, 171, 0.6)','rgba(134, 195, 180, 0.6)','rgba(200, 220, 195, 0.6)','rgba(134, 209, 209, 0.6)','rgba(244, 227, 209, 0.6)']
+colorOpts2 = ['#A020F099','#FF883399','#FFEB0099','#3AA65599','#02A4D399']
+colorOpts3 = ['#4E3A5E99','#56887D99','#7A89B899','#9E5E6F99','#8BA8B799']
+colorOpts4 = ['#FF993399','#FD5B7899','#FFFF6699','#CCFF0099','#AAF0D199']
+colorOptsDefault = ['rgba(255, 239, 162, .6)', 'rgba(254, 208, 208, .6)','rgba(185, 242, 177, .6)','rgba(218, 237, 254, .6)','rgba(150, 201, 255, .6)']
 
 colorsGraphText = ['#2176d2','#49A596','#FD0E35','#A17A74','#FF6EFF']
 
@@ -73,13 +73,30 @@ def csvToDict(csvfile,dict_of_otherinfo,p):
         data=[]
         counter=0;
         for c in cols:
-            print(GraphColorChoices(colorN, counter))
-            data.append(
-              {'label':c[0],
-                'data':c[1:],
-                'backgroundColor': GraphColorChoices(colorN,counter),
-                'borderColor': GraphColorChoices(colorN,counter),
-                'borderWidth': 3})
+            if counter == 2:
+                if 'graphtypes_2' in dict_of_otherinfo:
+                    data.append(
+                    {'label':c[0],
+                     'data':c[1:],
+                     'backgroundColor': GraphColorChoices(colorN,counter),
+                     'borderColor': GraphColorChoices(colorN,counter),
+                     'borderWidth': 3,
+                     'type': dict_of_otherinfo['graphtypes_2']})
+                else:
+                    data.append(
+                    {'label':c[0],
+                        'data':c[1:],
+                        'backgroundColor': GraphColorChoices(colorN,counter),
+                        'borderColor': GraphColorChoices(colorN,counter),
+                        'borderWidth': 3})
+            else:
+                print(GraphColorChoices(colorN, counter))
+                data.append(
+                {'label':c[0],
+                    'data':c[1:],
+                    'backgroundColor': GraphColorChoices(colorN,counter),
+                    'borderColor': GraphColorChoices(colorN,counter),
+                    'borderWidth': 3})
             counter += 1
     #and finally creating the data for chart.js
 #    if gt == 'bar':
