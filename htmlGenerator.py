@@ -104,10 +104,11 @@ def edit():
     dels = []
     count2 = 0
     for result in printable_list:
-        if request.form[result[2]] == "delete":
+        if request.form[result[5]] == "delete":
             dels.append(result)
+            print(result)
         else:
-            numlist.append(int(request.form[result[2]]) - 1)
+            numlist.append(int(request.form[result[5]]) - 1)
         count2 += 1
     for val in dels:
         printable_list.remove(val)

@@ -63,6 +63,26 @@ def csvToDict(csvfile,dict_of_otherinfo,p):
     else:
         colorN = dict_of_otherinfo['selectR']
 
+    if 'stacked' in dict_of_otherinfo:
+        stack = True
+    else:
+        stack = False
+
+    if 'log' in dict_of_otherinfo:
+        log = "logarithmic"
+    else:
+        log = "linear"
+
+    if 'min' in dict_of_otherinfo:
+        min1 = dict_of_otherinfo['min']
+    else:
+        min1 = ""
+
+    if 'max' in dict_of_otherinfo:
+        max1 = dict_of_otherinfo['max']
+    else:
+        max1 = ""   
+
     ##nowww opening the file
     csvname = os.path.normpath(os.path.join(p, csvfile.filename))
     print(csvname)
@@ -71,7 +91,7 @@ def csvToDict(csvfile,dict_of_otherinfo,p):
         reader = csv.reader(infile)
         cols = zip(*reader)
         data=[]
-        counter=0;
+        counter=0
         for c in cols:
             if counter == 2:
                 if 'graphtypes_2' in dict_of_otherinfo:
@@ -101,44 +121,50 @@ def csvToDict(csvfile,dict_of_otherinfo,p):
     #and finally creating the data for chart.js
 #    if gt == 'bar':
     opts = {
-      'type':gt,
-      'data':
-      {
+    'type':gt,
+    'data':
+    {
         'labels': data[0]['data'],
         'datasets': data[1:]
-      },
-      'options':
-      {
+    },
+    'options':
+    {
         'spanGaps': True,
         'scales':
         {
-          'yAxes':
-          [{
+        'yAxes':
+        [{
+            'type': log,
+            'ticks': {
+                'suggestedMin': min1,
+                'suggestedMax': max1,
+            },
             'scaleLabel': {
-              'display': True,
-              'labelString': dict_of_otherinfo['title-x'],
-              'fontColor': TextColorChoices(colorN)
-            }
-          }],
-          'xAxes':
-          [{
+            'display': True,
+            'labelString': dict_of_otherinfo['title-x'],
+            'fontColor': TextColorChoices(colorN)
+            },
+            'stacked': stack,
+        }],
+        'xAxes':
+        [{
             'scaleLabel' : {
                 'display': True,
                 'labelString': dict_of_otherinfo['title-y'],
                 'fontColor': TextColorChoices(colorN)
-            }
-          }]
+            },
+            'stacked': stack,
+        }]
         },
         'title':
         {
-          'display':True,
-          'text':tt,
-          'position':'top',
-          'fontColor': TextColorChoices(colorN)
+        'display':True,
+        'text':tt,
+        'position':'top',
+        'fontColor': TextColorChoices(colorN)
         }
     }
     }
-
     return opts
     #print(opts)
 
