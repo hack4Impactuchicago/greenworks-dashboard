@@ -3,6 +3,8 @@ import os
 import requests
 import tempfile
 import shelve
+import sqlite3
+import random
 import csvToDictionary as reader
 from flask import Flask, request, render_template, redirect, url_for, g, session
 from flask import render_template_string
@@ -11,16 +13,6 @@ from wtforms import Form, BooleanField, StringField, PasswordField, validators
 from wtforms.validators import Required
 
 app = Flask(__name__)
-
-from sqlalchemy import *
-from sqlalchemy import create_engine, ForeignKey
-from sqlalchemy import Column, Date, Integer, String
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship, backref
-from werkzeug.security import generate_password_hash, \
-     check_password_hash
-import datetime
-from sqlalchemy.orm import sessionmaker
 
 
 #
@@ -31,21 +23,37 @@ from sqlalchemy.orm import sessionmaker
 # session.commit()
 
 
+def createChartID():
+    conn = sqlite3.connect('charts.db')
+    c = conn.cursor()
+    while True:
+        id = random.randint(1, 1000000)
+        c.execute('Select * FROM charts WHERE chartid =?', (id,))
+        preexisting = c.fetchone()
+        if preexisting is None:
+            break
+    conn.commit()
+    conn.close()
+    return id
+
+def findNextAvailable():
+    conn = sqlite3.connect('charts.db')
+    c = conn.cursor()
+    c.execute('SELECT Count(*) FROM charts')
+    numrow = c.fetchone()
+    num = 0
+    if numrow:
+        num = numrow[0] + 1
+    conn.commit()
+    c.close()
+    return num
+
 ##Definitions
 path_directory = os.path.join('static','_data')
-UPLOAD_FOLDER = os.path.normpath(path_directory);
+UPLOAD_FOLDER = os.path.normpath(path_directory)
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 printable_list = []
-with shelve.open('shelve') as db:
-    flag = 'list' in db
-    if flag:
-        printable_list = db['list']
-    else:
-        printable_list = []
-        db['list'] = printable_list
-    db.close()
-count = len(printable_list) + 1
 ALLOWED_EXTENSIONS = set(['csv'])
 
 ##HELPERS
@@ -62,13 +70,13 @@ def logout():
 ##MAIN ROUTING
 @app.route('/', methods = ['GET'])
 def landing():
-    with shelve.open('shelve') as db:
-        printable_list = db['list']
-        db.close()
     if not 'logged_in' in session:
         session['logged_in'] = False
         session['authenticated'] = False
-    return render_template("default.html", results = printable_list)
+    conn = sqlite3.connect('charts.db')
+    c = conn.cursor()
+    c.execute('SELECT * FROM charts ORDER BY position')
+    return render_template("default.html", results = c.fetchall())
 
 @app.route('/', methods = ['POST'])
 def upload():
@@ -79,45 +87,62 @@ def upload():
     if file.filename == '':
         flash('No selected file')
     if file:
-        global count
+        conn = sqlite3.connect('charts.db')
+        c = conn.cursor()
         file.filename = secure_filename(file.filename)
         path = os.path.normpath(os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(file.filename)))
         file.save(path)
         data = reader.csvToDict(file,request.form,app.config['UPLOAD_FOLDER'])
          #now working with the actual template rendering
-        myString = "myChart" + str(count)
-        print(myString)
-        values = [json.dumps(data), request.form['source'], request.form['vision'], request.form['subject'], request.form['purpose'], myString]
-        printable_list.append(values)
-        count += 1
-        with shelve.open('shelve') as db:
-            del db['list']
-            db['list'] = printable_list
-            db.close()
+        values = (json.dumps(data), request.form['source'], request.form['vision'], request.form['subject'], request.form['purpose'], createChartID(), findNextAvailable())
+        c.execute('INSERT INTO charts VALUES (?, ?, ?, ?, ?, ?, ?)', values)
+        conn.commit()
+        conn.close()
         return redirect('/')
 
 @app.route('/editing', methods = ['POST'])
 def edit():
-    global printable_list
-    global count
-    numlist = []
-    dels = []
-    count2 = 0
-    for result in printable_list:
-        if request.form[result[5]] == "delete":
-            dels.append(result)
-            print(result)
-        else:
-            numlist.append(int(request.form[result[5]]) - 1)
-        count2 += 1
-    for val in dels:
-        printable_list.remove(val)
-    printable_list = [ printable_list[i] for i in numlist ]
-    with shelve.open('shelve') as db:
-        del db['list']
-        db['list'] = printable_list
-        db.close()
+    conn = sqlite3.connect('charts.db')
+    c = conn.cursor()
+    c.execute('SELECT * FROM charts')
+    rows = c.fetchall()
+    for counter, entry in enumerate(rows):
+        form = request.form[str(counter + 1)]
+        c.execute('UPDATE charts SET position = ? WHERE chartid = ?', (counter + 1, form))
+    conn.commit()
+    conn.close()
+    return redirect('/')    
+
+@app.route('/deleting', methods = ['POST'])
+def delete():
+    deletions = request.form.getlist('deletion')
+    conn = sqlite3.connect('charts.db')
+    c = conn.cursor()
+    for result in deletions:
+        c.execute('DELETE FROM charts WHERE chartid = ?', (result,))
+    c.execute('SELECT * FROM charts ORDER BY position')
+    rows = c.fetchall()
+    for counter, entry in enumerate(rows):
+        c.execute('UPDATE charts SET position = ? WHERE chartid = ?', (counter + 1, entry[5]))
+    conn.commit()
+    conn.close()
     return redirect('/')
+    
+@app.route('/adduser', methods = ['POST'])
+def adduser():
+    username = request.form["username"]
+    print(username)
+    conn = sqlite3.connect('charts.db')
+    c = conn.cursor()
+    c.execute('SELECT * FROM users WHERE username = ?', (username,))
+    output = c.fetchone()
+    if output is not None:
+        return redirect('/')
+    c.execute('INSERT INTO users VALUES (?)', (username,))
+    conn.commit()
+    conn.close()
+    return redirect('/')
+
 
 @app.route('/callback')
 def callback():
@@ -144,28 +169,14 @@ def callback():
             session['logged_in'] = True
 
             # Now we check if this user is an approved user
-            engine = create_engine('sqlite:///users.db', echo=True)
-            Base = declarative_base()
-
-            class User(Base):
-                __tablename__ = "users"
-
-                id = Column(Integer, primary_key=True)
-                username = Column(String)
-
-            # # create tables
-            Base.metadata.create_all(engine)
-
-            # # create a Session
-            dbSession = sessionmaker(bind=engine)
-            dbsession = dbSession()
-
-            if dbsession.query(User).filter(User.username == username).first() is not None:
+            conn = sqlite3.connect('charts.db')
+            c = conn.cursor()
+            c.execute('SELECT * FROM users WHERE username = ?', (username,))
+            user = c.fetchone()
+            if user is not None:
                 session['authenticated'] = True
-                print('yes')
-
-            dbsession.close()
-            engine.dispose()
+            conn.commit()
+            conn.close()
         return redirect('/')
     return '', 404
 
