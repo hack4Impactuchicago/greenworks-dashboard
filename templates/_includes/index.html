@@ -119,6 +119,7 @@
   									<option value="line">Line Graph</option>
 										<option value="scatter">Scatter Plot</option>
 									</select>
+                  <button class="button icon" id="MoreOptions">More Options</button>
 									<input type="checkbox" name="stacked" value="stacked">Select this option to produce a stacked bar chart</input>
 									<input type="checkbox" name="log" value="logarithmic">Select this option to use a logarithmic Y Axis</input>
 									<input type="number" name="min">If you want to manually set a minimum Y axis value, do so here</input>
@@ -309,7 +310,7 @@ window.onclick = function(event) {
 					modal4.style.display = "none";
 			}
 	}
-	
+
 	</script>
 
 <script>
@@ -331,7 +332,7 @@ window.onclick = function(event) {
 					modal3.style.display = "none";
 			}
 	}
-	
+
 	</script>
 
 <script>
@@ -454,4 +455,5 @@ $('#DefaultBBC').change(function () {
   $('.js-scroll-trigger').click(function() {
     $('.navbar-collapse').collapse('hide');
   });
+});
 </script>
