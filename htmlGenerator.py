@@ -94,7 +94,7 @@ def upload():
         file.save(path)
         data = reader.csvToDict(file,request.form,app.config['UPLOAD_FOLDER'])
          #now working with the actual template rendering
-        values = (json.dumps(data), request.form['source'], request.form['vision'], request.form['subject'], request.form['purpose'], createChartID(), findNextAvailable())
+        values = (json.dumps(data), request.form.get('source'), request.form.get('vision'), request.form.get('subject'), request.form.get('purpose'), createChartID(), findNextAvailable())
         c.execute('INSERT INTO charts VALUES (?, ?, ?, ?, ?, ?, ?)', values)
         conn.commit()
         conn.close()
@@ -111,7 +111,7 @@ def edit():
         c.execute('UPDATE charts SET position = ? WHERE chartid = ?', (counter + 1, form))
     conn.commit()
     conn.close()
-    return redirect('/')    
+    return redirect('/')
 
 @app.route('/deleting', methods = ['POST'])
 def delete():
@@ -127,7 +127,7 @@ def delete():
     conn.commit()
     conn.close()
     return redirect('/')
-    
+
 @app.route('/adduser', methods = ['POST'])
 def adduser():
     username = request.form["username"]

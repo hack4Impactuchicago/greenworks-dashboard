@@ -52,13 +52,13 @@ def csvToDict(csvfile,dict_of_otherinfo,p):
         tt = '[No Title]'
 
     #checking to see BBCcolors
-    if 'BBCcheck' in dict_of_otherinfo:
+    if dict_of_otherinfo.get('selectBBC') is None:
         bbc = 0
     else:
         bbc = dict_of_otherinfo['selectBBC']
 
     #checking to see Actual Colors
-    if 'Radiocheck' in dict_of_otherinfo:
+    if dict_of_otherinfo.get('selectR') is None:
         colorN = 0
     else:
         colorN = dict_of_otherinfo['selectR']
@@ -81,7 +81,7 @@ def csvToDict(csvfile,dict_of_otherinfo,p):
     if 'max' in dict_of_otherinfo:
         max1 = dict_of_otherinfo['max']
     else:
-        max1 = ""   
+        max1 = ""
 
     ##nowww opening the file
     csvname = os.path.normpath(os.path.join(p, csvfile.filename))
@@ -141,7 +141,7 @@ def csvToDict(csvfile,dict_of_otherinfo,p):
             },
             'scaleLabel': {
             'display': True,
-            'labelString': dict_of_otherinfo['title-x'],
+            'labelString': dict_of_otherinfo.get('title-x'),
             'fontColor': TextColorChoices(colorN)
             },
             'stacked': stack,
@@ -150,7 +150,7 @@ def csvToDict(csvfile,dict_of_otherinfo,p):
         [{
             'scaleLabel' : {
                 'display': True,
-                'labelString': dict_of_otherinfo['title-y'],
+                'labelString': dict_of_otherinfo.get('title-y'),
                 'fontColor': TextColorChoices(colorN)
             },
             'stacked': stack,
