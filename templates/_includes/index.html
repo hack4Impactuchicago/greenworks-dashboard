@@ -57,7 +57,7 @@
       <h4 class="formHeader">Delete Charts Here</h4>
       <form id="EditForm" action="{{ url_for('delete') }}" method="POST" class="inner-form-container" enctype="multipart/form-data">
         {% for result in results %}
-					<input type="checkbox" name="deletion" value="{{ result[5] }}">{{result[2]}}</input>
+					<input type="checkbox" name="deletion" value="{{ result[5] }}">{{result[2]}}</input><br>
         {% endfor %}
         <input type="submit" value="Submit">
       </form>
@@ -70,7 +70,7 @@
     <span class="close2" id = "close1">&times;</span>
     <div class="form-container">
       <h2 class="formHeader">Greenworks Dashboard: Edit Charts</h2>
-      <h4 class="formHeader">Edit and Delete Charts Here</h4>
+      <h4 class="formHeader">Reorder Charts</h4>
       <form id="EditForm" action="{{ url_for('edit') }}" method="POST" class="inner-form-container" enctype="multipart/form-data">
 				{% for result in results %}
 					<p>Chart {{loop.index}}</p>
@@ -119,8 +119,8 @@
   									<option value="line">Line Graph</option>
 										<option value="scatter">Scatter Plot</option>
 									</select>
-									<input type="checkbox" name="stacked" value="stacked">Select this option to produce a stacked bar chart</input>
-									<input type="checkbox" name="log" value="logarithmic">Select this option to use a logarithmic Y Axis</input>
+									<input type="checkbox" name="stacked" value="stacked">Select this option to produce a stacked bar chart</input><br>
+									<input type="checkbox" name="log" value="logarithmic">Select this option to use a logarithmic Y Axis</input><br>
 									<input type="number" name="min">If you want to manually set a minimum Y axis value, do so here</input>
 									<input type="number" name="max">If you want to manually set a maximum Y axis value, do so here</input>
 							</div>
